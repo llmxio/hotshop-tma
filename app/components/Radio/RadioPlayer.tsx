@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from "react";
 
-interface RadioPlayerContextProps {
+interface RadioPlayerProps {
   playing: boolean;
   currentStation: {
     src: string;
@@ -27,7 +27,7 @@ interface RadioPlayerContextProps {
   getCurrentSongTitle?: () => void;
 }
 
-const defaultContext: RadioPlayerContextProps = {
+const defaultContext: RadioPlayerProps = {
   playing: false,
   currentStation: {
     src: "",
@@ -46,8 +46,7 @@ const defaultContext: RadioPlayerContextProps = {
   toggleMute: () => {},
 };
 
-export const RadioPlayer =
-  createContext<RadioPlayerContextProps>(defaultContext);
+export const RadioPlayer = createContext<RadioPlayerProps>(defaultContext);
 
 export const useRadioPlayer = () => useContext(RadioPlayer);
 
@@ -107,29 +106,26 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
   }
 
   // Helper functions to extract artist and title from song title
-  function getArtistFromTitle(songTitle: string): string {
-    if (!songTitle) return "";
-    let split = songTitle.split(" - ");
-    if (split.length > 1) {
-      return split[0].trim();
+  function getArtistFromTitle(trackTitle: string): string {
+    if (!trackTitle) return "";
+
+    let split = trackTitle.split(" | ");
+
+    if (split.length > 0) {
+      return split[1].split("-")[0].trim();
     }
-    split = songTitle.split("–");
-    if (split.length > 1) {
-      return split[0].trim();
-    }
-    return songTitle;
+
+    return trackTitle;
   }
 
-  function getSongFromTitle(songTitle: string): string {
-    if (!songTitle) return "";
-    let split = songTitle.split(" - ");
-    if (split.length > 1) {
-      return split[1].trim();
+  function getSongFromTitle(trackTitle: string): string {
+    if (!trackTitle) return "";
+    let split = trackTitle.split(" | ");
+
+    if (split.length > 0) {
+      return split[1].split("-")[1].trim();
     }
-    split = songTitle.split("–");
-    if (split.length > 1) {
-      return split[1].trim();
-    }
+
     return "";
   }
 
@@ -173,6 +169,8 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
             const fullTitle = icecastMount.title;
             const artist = getArtistFromTitle(fullTitle);
             const title = getSongFromTitle(fullTitle);
+
+            console.log("Current song:", { artist, title, fullTitle });
 
             setCurrentSong({
               artist,
@@ -261,7 +259,7 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
     setMuted(newMuted);
   };
 
-  const value: RadioPlayerContextProps = {
+  const value: RadioPlayerProps = {
     playing,
     currentStation,
     volume,
@@ -274,9 +272,5 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
     getCurrentSongTitle,
   };
 
-  return (
-    <RadioPlayer.Provider value={value}>
-      {children}
-    </RadioPlayer.Provider>
-  );
+  return <RadioPlayer.Provider value={value}>{children}</RadioPlayer.Provider>;
 };

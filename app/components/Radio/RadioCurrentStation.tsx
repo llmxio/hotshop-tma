@@ -5,10 +5,10 @@ import { useRadioPlayer } from "./RadioPlayer";
 // Default station information for fallback
 const defaultStation = {
   id: "balrockru",
-  name: "Balrock Radio",
-  genre: "Rock & Metal musicss",
+  name: "Hot Shop",
+  genre: "Non-format music",
   src: "https://listen.myrh.ru/balrockru",
-  artwork: "https://i.imgur.com/jcGpRrV.jpg",
+  artwork: "https://balrock.ru/images/icecastlogo.jpg",
 };
 
 export const RadioCurrentStation: React.FC = () => {
@@ -32,7 +32,11 @@ export const RadioCurrentStation: React.FC = () => {
       }
     >
       <Cell
-        subtitle={defaultStation.genre}
+        subtitle={
+          isStationPlaying && currentSong.artist
+            ? currentSong.title
+            : defaultStation.genre
+        }
         before={
           <Image
             src={stationArtwork}
@@ -51,7 +55,9 @@ export const RadioCurrentStation: React.FC = () => {
           )
         }
       >
-        {stationName}
+        {isStationPlaying && currentSong.artist
+          ? currentSong.artist
+          : stationName}
       </Cell>
     </Section>
   );

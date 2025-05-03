@@ -46,10 +46,10 @@ const defaultContext: RadioPlayerContextProps = {
   toggleMute: () => {},
 };
 
-export const RadioPlayerContext =
+export const RadioPlayer =
   createContext<RadioPlayerContextProps>(defaultContext);
 
-export const useRadioPlayer = () => useContext(RadioPlayerContext);
+export const useRadioPlayer = () => useContext(RadioPlayer);
 
 export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -274,9 +274,5 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
     getCurrentSongTitle,
   };
 
-  return (
-    <RadioPlayerContext.Provider value={value}>
-      {children}
-    </RadioPlayerContext.Provider>
-  );
+  return <RadioPlayer.Provider value={value}>{children}</RadioPlayer.Provider>;
 };

@@ -1,8 +1,9 @@
 import React from "react";
 import { Section, Cell, Image, Button } from "@telegram-apps/telegram-ui";
-import { useRadioPlayer } from "./RadioPlayerContext";
+import { useRadioPlayer } from "./RadioPlayer";
 
-export let CURRENT_STATION = {
+// Default station information for fallback
+const defaultStation = {
   id: "balrockru",
   name: "Balrock Radio",
   genre: "Rock & Metal musicss",
@@ -10,32 +11,31 @@ export let CURRENT_STATION = {
   artwork: "https://i.imgur.com/jcGpRrV.jpg",
 };
 
-export function RadioCurrentStation() {
-  const { play, playing, currentStation, stop } = useRadioPlayer();
-  // Update global CURRENT_STATION with live data
-  CURRENT_STATION = {
-    ...CURRENT_STATION,
-    name: currentStation.title || CURRENT_STATION.name,
-    src: currentStation.src || CURRENT_STATION.src,
-    artwork: currentStation.artwork || CURRENT_STATION.artwork,
-  };
+export const RadioCurrentStation: React.FC = () => {
+  const { play, playing, currentStation, stop, currentSong } = useRadioPlayer();
+
+  const stationName = currentStation.title || defaultStation.name;
+  const stationSrc = currentStation.src || defaultStation.src;
+  const stationArtwork = currentStation.artwork || defaultStation.artwork;
+
   const handlePlay = () => {
-    play(CURRENT_STATION.src, CURRENT_STATION.name, CURRENT_STATION.artwork);
+    play(stationSrc, stationName, stationArtwork);
   };
-  const isStationPlaying =
-    playing && currentStation.src === CURRENT_STATION.src;
+
+  const isStationPlaying = playing && currentStation.src === stationSrc;
+
   return (
     <Section
-      header={<Section.Header large>{CURRENT_STATION.name}</Section.Header>}
+      header={<Section.Header large>{stationName}</Section.Header>}
       footer={
-        <Section.Footer>{CURRENT_STATION.genre} streaming 24/7</Section.Footer>
+        <Section.Footer>{defaultStation.genre} streaming 24/7</Section.Footer>
       }
     >
       <Cell
-        subtitle={CURRENT_STATION.genre}
+        subtitle={defaultStation.genre}
         before={
           <Image
-            src={CURRENT_STATION.artwork}
+            src={stationArtwork}
             style={{ width: 60, height: 60, borderRadius: 4 }}
           />
         }
@@ -51,8 +51,8 @@ export function RadioCurrentStation() {
           )
         }
       >
-        {CURRENT_STATION.name}
+        {stationName}
       </Cell>
     </Section>
   );
-}
+};

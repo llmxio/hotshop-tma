@@ -23,7 +23,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { main } from "./main";
 import { mockEnv } from "./mock";
-import { RadioPlayerProvider } from "./components/Radio/RadioPlayerContext";
+import { RadioPlayerProvider } from "./components/Radio/RadioPlayer";
 import { RadioGlobalFooter } from "./components/Radio/RadioGlobalFooter";
 
 export const links: Route.LinksFunction = () => [

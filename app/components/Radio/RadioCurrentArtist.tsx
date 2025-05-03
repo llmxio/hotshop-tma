@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Section, Cell, Avatar } from "@telegram-apps/telegram-ui";
-import { useRadioPlayer } from "./RadioPlayerContext";
+import { useRadioPlayer } from "./RadioPlayer";
 
 export let CURRENT_ARTIST = {
   name: "",

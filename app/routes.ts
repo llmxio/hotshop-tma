@@ -7,14 +7,11 @@ import {
 
 export default [
   // Radio page as index route (no back button)
-  layout("layouts/RouteLayoutNoBack.tsx", [index("routes/radio.tsx")]),
+  layout("layouts/RootNoBack.tsx", [index("routes/radio.tsx")]),
 
   // Home page with back button
-  layout("layouts/RouteLayoutWithBack.tsx", [
+  layout("layouts/RootWithBack.tsx", [
     route("home", "routes/home.tsx"),
     route("about", "routes/about.tsx"),
   ]),
-
-  // // About page without back button
-  // layout("layouts/RouteLayoutNoBack.tsx", [route("about", "routes/about.tsx")]),
 ] satisfies RouteConfig;

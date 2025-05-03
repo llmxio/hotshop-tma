@@ -4,9 +4,10 @@ import {
   onBackButtonClick,
   isBackButtonMounted,
 } from "@telegram-apps/sdk-react";
+
 import { useEffect } from "react";
 
-export default function RouteLayoutWithBack() {
+export default function RootWithBack() {
   const navigate = useNavigate();
 
   useEffect(() => {

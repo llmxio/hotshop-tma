@@ -6,7 +6,7 @@ import { useRadioPlayer } from "./RadioPlayer";
 const defaultStation = {
   id: "balrockru",
   name: "Hot Shop",
-  genre: "Non-format music",
+  genre: "non-format music",
   src: "https://listen.myrh.ru/balrockru",
   artwork: "https://balrock.ru/images/icecastlogo.jpg",
 };

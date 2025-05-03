@@ -4,8 +4,8 @@ import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Hot Shop Radio" },
+    { name: "description", content: "Welcome Hot Shop Radio!" },
   ];
 }
 

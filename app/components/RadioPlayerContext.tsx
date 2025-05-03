@@ -15,10 +15,12 @@ interface RadioPlayerContextProps {
   };
   volume: number;
   muted: boolean;
+  currentSong: string;
   play: (src?: string, title?: string, artwork?: string) => void;
   stop: () => void;
   setVolume: (value: number) => void;
   toggleMute: () => void;
+  getCurrentSong?: () => void;
 }
 
 const defaultContext: RadioPlayerContextProps = {
@@ -29,6 +31,7 @@ const defaultContext: RadioPlayerContextProps = {
   },
   volume: 1,
   muted: false,
+  currentSong: "",
   play: () => {},
   stop: () => {},
   setVolume: () => {},
@@ -52,6 +55,7 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
   });
   const [volume, setVolumeState] = useState(1);
   const [muted, setMuted] = useState(false);
+  const [currentSong, setCurrentSong] = useState("");
 
   useEffect(() => {
     // Create audio element when component mounts
@@ -67,6 +71,88 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     };
   }, []);
+
+  // Helper to parse URL
+  function getLocation(href: string) {
+    const match = href.match(
+      /^(https?:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)([\/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/
+    );
+    return (
+      match && {
+        protocol: match[1],
+        host: match[2],
+        hostname: match[3],
+        port: match[4],
+        pathname: match[5],
+        search: match[6],
+        hash: match[7],
+      }
+    );
+  }
+
+  // Fetch current song and update context
+  const getCurrentSong = React.useCallback(() => {
+    if (!currentStation.src) return;
+    const stream = currentStation.src;
+    const globalMount = undefined; // Set if needed
+    let streamPath = getLocation(stream);
+    let jsonPath;
+    if (streamPath && streamPath.host === "listen.myrh.ru") {
+      jsonPath = stream + "/json.xsl";
+    } else if (streamPath) {
+      jsonPath = streamPath.protocol + "//" + streamPath.host + "/json.xsl";
+    } else {
+      return;
+    }
+    let radioMounts = ["/studio", "/relay", "/nonstop"];
+    fetch(jsonPath)
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((response: any) => {
+        let mounts = response.mounts;
+        let directMount = mounts.find(
+          (item: any) => !radioMounts.includes(item.mount)
+        );
+        if (directMount) {
+          radioMounts.unshift(directMount.mount);
+        }
+        if (globalMount) {
+          radioMounts.unshift(globalMount);
+        }
+        for (let i = 0; i < radioMounts.length; i++) {
+          let radioMount = radioMounts[i];
+          let icecastMount = mounts.find(
+            (item: any) => item.mount === radioMount && item.title.length > 0
+          );
+          if (icecastMount) {
+            setCurrentSong(icecastMount.title);
+            setCurrentStation((prev) => ({
+              ...prev,
+              title: icecastMount.name || prev.title,
+            }));
+            break;
+          }
+        }
+      })
+      .catch((err) => {
+        // Optionally handle error
+        console.error("Failed to fetch current song:", err);
+      });
+  }, [currentStation.src]);
+
+  // Poll for song updates when playing
+  useEffect(() => {
+    let interval: number | undefined;
+    if (playing) {
+      getCurrentSong();
+      interval = window.setInterval(getCurrentSong, 5000);
+    }
+    return () => {
+      if (interval !== undefined) window.clearInterval(interval);
+    };
+  }, [playing, getCurrentSong]);
 
   const play = (src?: string, title?: string, artwork?: string) => {
     if (!audioRef.current) return;
@@ -128,10 +214,12 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
     currentStation,
     volume,
     muted,
+    currentSong,
     play,
     stop,
     setVolume,
     toggleMute,
+    getCurrentSong,
   };
 
   return (

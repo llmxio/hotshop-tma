@@ -1,6 +1,5 @@
 import type { Route } from "./+types/about";
 import { AboutPage } from "~/pages/AboutPage";
-import { AppRoot } from "@telegram-apps/telegram-ui";
 
 export function meta({}: Route.MetaArgs) {
   return [

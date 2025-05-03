@@ -24,7 +24,7 @@ import "./app.css";
 import { main } from "./main";
 import { mockEnv } from "./mock";
 import { RadioPlayerProvider } from "./components/RadioPlayerContext";
-import { GlobalRadioFooter } from "./components/GlobalRadioFooter";
+import { RadioGlobalFooter } from "./components/Radio/RadioGlobalFooter";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -92,7 +92,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <RadioPlayerProvider>
           <AppRoot appearance={isDark ? "dark" : "light"} platform="base">
             {children}
-            <GlobalRadioFooter />
+            <RadioGlobalFooter />
           </AppRoot>
         </RadioPlayerProvider>
         <ScrollRestoration />

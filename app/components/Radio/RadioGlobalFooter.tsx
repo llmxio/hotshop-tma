@@ -1,6 +1,6 @@
 import React from "react";
 import { FaPlay, FaStop, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
-import { useRadioPlayer } from "./RadioPlayerContext";
+import { useRadioPlayer } from "../RadioPlayerContext";
 import {
   Slider,
   Avatar,
@@ -11,7 +11,7 @@ import {
 } from "@telegram-apps/telegram-ui";
 import "./radio.css";
 
-export const GlobalRadioFooter: React.FC = () => {
+export const RadioGlobalFooter: React.FC = () => {
   const {
     playing,
     currentStation,

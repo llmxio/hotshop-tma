@@ -15,12 +15,16 @@ interface RadioPlayerContextProps {
   };
   volume: number;
   muted: boolean;
-  currentSong: string;
+  currentSong: {
+    artist: string;
+    title: string;
+    fullTitle: string;
+  };
   play: (src?: string, title?: string, artwork?: string) => void;
   stop: () => void;
   setVolume: (value: number) => void;
   toggleMute: () => void;
-  getCurrentSong?: () => void;
+  getCurrentSongTitle?: () => void;
 }
 
 const defaultContext: RadioPlayerContextProps = {
@@ -31,7 +35,11 @@ const defaultContext: RadioPlayerContextProps = {
   },
   volume: 1,
   muted: false,
-  currentSong: "",
+  currentSong: {
+    artist: "",
+    title: "",
+    fullTitle: "",
+  },
   play: () => {},
   stop: () => {},
   setVolume: () => {},
@@ -55,7 +63,15 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
   });
   const [volume, setVolumeState] = useState(1);
   const [muted, setMuted] = useState(false);
-  const [currentSong, setCurrentSong] = useState("");
+  const [currentSong, setCurrentSong] = useState<{
+    artist: string;
+    title: string;
+    fullTitle: string;
+  }>({
+    artist: "",
+    title: "",
+    fullTitle: "",
+  });
 
   useEffect(() => {
     // Create audio element when component mounts
@@ -90,8 +106,35 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   }
 
+  // Helper functions to extract artist and title from song title
+  function getArtistFromTitle(songTitle: string): string {
+    if (!songTitle) return "";
+    let split = songTitle.split(" - ");
+    if (split.length > 1) {
+      return split[0].trim();
+    }
+    split = songTitle.split("–");
+    if (split.length > 1) {
+      return split[0].trim();
+    }
+    return songTitle;
+  }
+
+  function getSongFromTitle(songTitle: string): string {
+    if (!songTitle) return "";
+    let split = songTitle.split(" - ");
+    if (split.length > 1) {
+      return split[1].trim();
+    }
+    split = songTitle.split("–");
+    if (split.length > 1) {
+      return split[1].trim();
+    }
+    return "";
+  }
+
   // Fetch current song and update context
-  const getCurrentSong = React.useCallback(() => {
+  const getCurrentSongTitle = React.useCallback(() => {
     if (!currentStation.src) return;
     const stream = currentStation.src;
     const globalMount = undefined; // Set if needed
@@ -127,7 +170,16 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
             (item: any) => item.mount === radioMount && item.title.length > 0
           );
           if (icecastMount) {
-            setCurrentSong(icecastMount.title);
+            const fullTitle = icecastMount.title;
+            const artist = getArtistFromTitle(fullTitle);
+            const title = getSongFromTitle(fullTitle);
+
+            setCurrentSong({
+              artist,
+              title,
+              fullTitle,
+            });
+
             setCurrentStation((prev) => ({
               ...prev,
               title: icecastMount.name || prev.title,
@@ -146,13 +198,13 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     let interval: number | undefined;
     if (playing) {
-      getCurrentSong();
-      interval = window.setInterval(getCurrentSong, 5000);
+      getCurrentSongTitle();
+      interval = window.setInterval(getCurrentSongTitle, 5000);
     }
     return () => {
       if (interval !== undefined) window.clearInterval(interval);
     };
-  }, [playing, getCurrentSong]);
+  }, [playing, getCurrentSongTitle]);
 
   const play = (src?: string, title?: string, artwork?: string) => {
     if (!audioRef.current) return;
@@ -219,7 +271,7 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
     stop,
     setVolume,
     toggleMute,
-    getCurrentSong,
+    getCurrentSongTitle,
   };
 
   return (

@@ -1,7 +1,8 @@
+import React from "react";
 import { Page } from "~/components/Page";
-import { RadioCurrentStation } from "../components/RadioCurrentStation";
-import { RadioCurrentArtist } from "../components/RadioCurrentArtist";
-import { RadioCurrentAlbum } from "../components/RadioCurrentAlbum";
+import { RadioCurrentStation } from "../components/Radio/RadioCurrentStation";
+import { RadioCurrentArtist } from "../components/Radio/RadioCurrentArtist";
+import { RadioCurrentAlbum } from "../components/Radio/RadioCurrentAlbum";
 
 export function RadioPage() {
   return (
@@ -9,7 +10,7 @@ export function RadioPage() {
       <RadioCurrentStation />
       <RadioCurrentArtist />
       <RadioCurrentAlbum />
-      {/* The GlobalRadioFooter will appear automatically when the station is playing */}
+      {/* The RadioGlobalFooter will appear automatically when the station is playing */}
     </Page>
   );
 }

@@ -5,6 +5,11 @@ import React, {
   useState,
   useEffect,
 } from "react";
+import {
+  getLocation,
+  getArtistFromTitle,
+  getSongFromTitle,
+} from "./RadioHelpers";
 
 interface RadioPlayerProps {
   playing: boolean;
@@ -86,48 +91,6 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     };
   }, []);
-
-  // Helper to parse URL
-  function getLocation(href: string) {
-    const match = href.match(
-      /^(https?:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)([\/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/
-    );
-    return (
-      match && {
-        protocol: match[1],
-        host: match[2],
-        hostname: match[3],
-        port: match[4],
-        pathname: match[5],
-        search: match[6],
-        hash: match[7],
-      }
-    );
-  }
-
-  // Helper functions to extract artist and title from song title
-  function getArtistFromTitle(trackTitle: string): string {
-    if (!trackTitle) return "";
-
-    let split = trackTitle.split(" | ");
-
-    if (split.length > 0) {
-      return split[1].split("-")[0].trim();
-    }
-
-    return trackTitle;
-  }
-
-  function getSongFromTitle(trackTitle: string): string {
-    if (!trackTitle) return "";
-    let split = trackTitle.split(" | ");
-
-    if (split.length > 0) {
-      return split[1].split("-")[1].trim();
-    }
-
-    return "";
-  }
 
   // Fetch current song and update context
   const getCurrentSongTitle = React.useCallback(() => {

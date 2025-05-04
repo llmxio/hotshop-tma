@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Cell, Avatar, Info } from "@telegram-apps/telegram-ui";
+import { Link } from "@/components/Link";
+import { Avatar, Cell, Info } from "@telegram-apps/telegram-ui";
+import React, { useEffect, useState } from "react";
 
 import {
   getArtistFromTitle,
   getSongFromTitle,
-  getArtistImage,
-} from "./RadioHelpers";
-
-import { Link } from "@/components/Link";
+  radioHeartService,
+} from "@/services/RadioHeartService";
 
 // Constants
 const DEFAULT_IMAGE =
@@ -38,30 +37,35 @@ export const RadioTrackInfo: React.FC<RadioTrackInfoProps> = ({
   dense = false,
 }) => {
   const artist = getArtistFromTitle(name);
-  const song = getSongFromTitle(name);
+  const title = getSongFromTitle(name);
   const [artistImage, setArtistImage] = useState<string>(defaultImage);
 
   // Fetch artist image when track name changes
   useEffect(() => {
     if (name) {
-      getArtistImage(name, defaultImage, (imageUrl) => {
-        setArtistImage(imageUrl);
-      });
+      radioHeartService.getArtistImage(
+        artist,
+        title,
+        defaultImage,
+        (imageUrl) => {
+          setArtistImage(imageUrl);
+        }
+      );
     }
   }, [name, defaultImage]);
 
   // Create track URL with encoded parameters
   const trackUrl = `/track/${encodeURIComponent(artist)}/${encodeURIComponent(
-    song
+    title
   )}`;
 
   const cellContent = dense ? (
     <Cell before={<Avatar size={40} src={artistImage} />} after={time}>
-      {`${artist} - ${song}`}
+      {`${artist} - ${title}`}
     </Cell>
   ) : (
     <Cell
-      subtitle={song}
+      subtitle={title}
       before={<Avatar size={48} src={artistImage} />}
       after={time ? <Info type="text">{time}</Info> : undefined}
     >

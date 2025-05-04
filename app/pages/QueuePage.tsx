@@ -1,4 +1,5 @@
-import { RadioCurrentStation, RadioTrackHistory } from "@/components/Radio";
+import { RadioTrackHistory } from "@/components/Radio";
+import { RadioCurrentStation } from "@/components/Radio/RadioCurrentStation";
 
 interface QueuePageProps {
   recentTracks?: any[];

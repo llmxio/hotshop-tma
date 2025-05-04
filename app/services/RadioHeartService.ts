@@ -44,7 +44,7 @@ export function getArtistFromTitle(trackTitle: string): string {
 
 export function getSongFromTitle(trackTitle: string): string {
   if (!trackTitle) return "";
-  
+
   let split = trackTitle.split(" | ");
 
   if (split.length > 0) {
@@ -160,14 +160,13 @@ export class RadioHeartService {
    * @param onImageFetched Callback function that receives the image URL
    */
   getArtistImage(
+    songArtist: string,
     songTitle: string,
     defaultLogo: string,
     onImageFetched: (imageUrl: string) => void
   ): void {
     fetch(
-      `https://image-fetcher.radioheart.ru/api/get-image?artist=${getArtistFromTitle(
-        songTitle
-      )}&title=${getSongFromTitle(songTitle)}`
+      `https://image-fetcher.radioheart.ru/api/get-image?artist=${songArtist}&title=${songTitle}`
     )
       .then((response) => {
         if (!response.ok) {

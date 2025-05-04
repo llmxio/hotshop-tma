@@ -1,6 +1,5 @@
 import type { Route } from "./+types/track";
 import { TrackInfoPage } from "@/pages/TrackInfoPage";
-import RootWithBack from "@/layouts/RootWithBack";
 import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 
 export function meta({ params }: Route.MetaArgs) {
@@ -35,11 +34,7 @@ export async function clientLoader({
     const serverParams = await serverLoader();
     const launchParams = retrieveLaunchParams();
 
-    const result = { ...launchParams, ...serverParams };
-
-    console.log("clientLoader", result);
-
-    return result;
+    return { ...launchParams, ...serverParams };
   } catch (error) {
     console.error("track info", error);
     return { trackArtist: params.trackArtist, trackName: params.trackName };
@@ -47,5 +42,10 @@ export async function clientLoader({
 }
 
 export default function Track({ loaderData }: Route.ComponentProps) {
-  return <TrackInfoPage />;
+  return (
+    <TrackInfoPage
+      trackArtist={loaderData.trackArtist}
+      trackName={loaderData.trackName}
+    />
+  );
 }

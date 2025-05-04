@@ -4,7 +4,7 @@ import {
   getLocation,
   getArtistFromTitle,
   getSongFromTitle,
-} from "./RadioHelpers";
+} from "@/services/RadioHeartService";
 
 export interface RadioPlayerProps {
   playing: boolean;

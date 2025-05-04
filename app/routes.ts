@@ -13,6 +13,7 @@ export default [
   layout("layouts/RootWithBack.tsx", [
     route("home", "routes/home.tsx"),
     route("about", "routes/about.tsx"),
+    route("queue", "routes/queue.tsx"),
     route("track/:trackArtist/:trackName", "routes/track.tsx"),
   ]),
 ] satisfies RouteConfig;

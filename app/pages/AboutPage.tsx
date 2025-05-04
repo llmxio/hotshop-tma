@@ -1,6 +1,6 @@
 import { Cell, Image, List, Section } from "@telegram-apps/telegram-ui";
 import { Link } from "~/components/Link/Link";
-import tonSvg from "./ton.svg";
+import tonSvg from "~/assets/ton.svg";
 
 export function AboutPage() {
   return (

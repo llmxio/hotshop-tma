@@ -51,9 +51,9 @@ const defaultContext: RadioPlayerProps = {
   toggleMute: () => {},
 };
 
-export const RadioPlayer = createContext<RadioPlayerProps>(defaultContext);
+export const RadioPlayerContext = createContext(defaultContext);
 
-export const useRadioPlayer = () => useContext(RadioPlayer);
+export const useRadioPlayer = () => useContext(RadioPlayerContext);
 
 export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -67,11 +67,7 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
   });
   const [volume, setVolumeState] = useState(1);
   const [muted, setMuted] = useState(false);
-  const [currentSong, setCurrentSong] = useState<{
-    artist: string;
-    title: string;
-    fullTitle: string;
-  }>({
+  const [currentSong, setCurrentSong] = useState({
     artist: "",
     title: "",
     fullTitle: "",
@@ -107,12 +103,14 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
       return;
     }
     let radioMounts = ["/studio", "/relay", "/nonstop"];
+    console.log("Fetching current song from:", jsonPath);
     fetch(jsonPath)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
       })
       .then((response: any) => {
+        console.log("Response:", response);
         let mounts = response.mounts;
         let directMount = mounts.find(
           (item: any) => !radioMounts.includes(item.mount)
@@ -158,10 +156,12 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
   // Poll for song updates when playing
   useEffect(() => {
     let interval: number | undefined;
+
     if (playing) {
       getCurrentSongTitle();
       interval = window.setInterval(getCurrentSongTitle, 5000);
     }
+
     return () => {
       if (interval !== undefined) window.clearInterval(interval);
     };
@@ -235,5 +235,9 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
     getCurrentSongTitle,
   };
 
-  return <RadioPlayer.Provider value={value}>{children}</RadioPlayer.Provider>;
+  return (
+    <RadioPlayerContext.Provider value={value}>
+      {children}
+    </RadioPlayerContext.Provider>
+  );
 };

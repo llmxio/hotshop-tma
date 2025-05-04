@@ -23,7 +23,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { main } from "./main";
 import { mockEnv } from "./mock";
-import { RadioPlayerProvider } from "./components/Radio/RadioPlayer";
+import { RadioPlayerProvider } from "./components/Radio/RadioPlayerContext";
 import { RadioGlobalFooter } from "./components/Radio/RadioGlobalFooter";
 
 export const links: Route.LinksFunction = () => [
@@ -59,6 +59,7 @@ export async function clientLoader({
 
     const launchParams = retrieveLaunchParams();
     const { tgWebAppPlatform: platform } = launchParams;
+
     const debug =
       (launchParams.tgWebAppStartParam || "").includes("platformer_debug") ||
       import.meta.env.DEV;

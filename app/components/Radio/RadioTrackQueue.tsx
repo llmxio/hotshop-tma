@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Section, List, Button, Spinner } from "@telegram-apps/telegram-ui";
-import { useRadioPlayer } from "./RadioPlayer";
+import { useRadioPlayer } from "./RadioPlayerContext";
 import { RadioTrackInfo } from "./RadioTrackInfo";
-import type { RadioTrackInfoProps } from "./RadioTrackInfo";
-
-type Track = RadioTrackInfoProps;
-
-interface ApiResponse {
-  tracks?: Track[];
-  [key: string]: any;
-}
-
-// API endpoint for fetching next tracks
-const API_ENDPOINT =
-  "https://a3.radioheart.ru/api/json?userlogin=user8039&count=10&api=nexttrack";
+import { radioHeartService } from "~/services/RadioHeartService";
+import type { Track } from "~/services/RadioHeartService";
 
 export const RadioTrackQueue: React.FC = () => {
   const { playing } = useRadioPlayer();
@@ -25,23 +15,8 @@ export const RadioTrackQueue: React.FC = () => {
   const fetchNextTracks = async () => {
     try {
       setLoading(true);
-      const response = await fetch(API_ENDPOINT);
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch next tracks: ${response.status}`);
-      }
-
-      const data = (await response.json()) as ApiResponse | Track[];
-
-      // Handle different response formats
-      if (Array.isArray(data)) {
-        setTracks(data);
-      } else if (data && Array.isArray(data.tracks)) {
-        setTracks(data.tracks);
-      } else {
-        console.warn("Unexpected API response format:", data);
-        setTracks([]);
-      }
+      const upcomingTracks = await radioHeartService.getUpcomingTracks(10);
+      setTracks(upcomingTracks);
     } catch (err) {
       console.error("Error fetching next tracks:", err);
       setError(err instanceof Error ? err.message : "Failed to load queue");

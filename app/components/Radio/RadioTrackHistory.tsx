@@ -1,41 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Section, List, Button, Spinner } from "@telegram-apps/telegram-ui";
 import { RadioTrackInfo } from "./RadioTrackInfo";
-import type { RadioTrackInfoProps } from "./RadioTrackInfo";
+import { radioHeartService } from "~/services/RadioHeartService";
+import type { Track } from "~/services/RadioHeartService";
 
-type Track = RadioTrackInfoProps;
-
-interface ApiResponse {
-  tracks?: Track[];
-  [key: string]: any;
+interface RadioTrackHistoryProps {
+  initialTracks?: Track[];
 }
 
-const API_ENDPOINT =
-  "https://a3.radioheart.ru/api/json?userlogin=user8039&count=10&api=lasttrack";
-
-export const RadioTrackHistory: React.FC = () => {
-  const [tracks, setTracks] = useState<Track[]>([]);
-  const [loading, setLoading] = useState(true);
+export const RadioTrackHistory: React.FC<RadioTrackHistoryProps> = ({
+  initialTracks = [],
+}) => {
+  const [tracks, setTracks] = useState<Track[]>(initialTracks);
+  const [loading, setLoading] = useState(initialTracks.length === 0);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (initialTracks.length > 0) {
+      return; // Skip fetching if we have initial tracks
+    }
+
     const fetchRecentTracks = async () => {
       try {
-        const response = await fetch(API_ENDPOINT);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch track history: ${response.status}`);
-        }
-
-        const data = (await response.json()) as ApiResponse | Track[];
-        // Handle API response format - it could return tracks directly or nested
-        if (Array.isArray(data)) {
-          setTracks(data);
-        } else if (data && Array.isArray(data.tracks)) {
-          setTracks(data.tracks);
-        } else {
-          console.warn("Unexpected API response format:", data);
-          setTracks([]);
-        }
+        setLoading(true);
+        const recentTracks = await radioHeartService.getRecentTracks(10);
+        setTracks(recentTracks);
       } catch (err) {
         console.error("Error fetching track history:", err);
         setError(
@@ -47,7 +36,7 @@ export const RadioTrackHistory: React.FC = () => {
     };
 
     fetchRecentTracks();
-  }, []);
+  }, [initialTracks]);
 
   if (loading) {
     return (

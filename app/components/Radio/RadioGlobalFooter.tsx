@@ -1,6 +1,6 @@
 import React from "react";
 import { FaPlay, FaStop, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
-import { useRadioPlayer } from "./RadioPlayer";
+import { useRadioPlayer } from "./RadioPlayerContext";
 import {
   Slider,
   Avatar,

@@ -38,10 +38,6 @@ export function TrackInfoPage({ trackArtist, trackTitle }: TrackInfoParams) {
             track: trackInfo,
           } = await musicBrainzService.getFullTrackInfo(artist, title);
 
-          console.log("Fetched artist info:", artistInfo);
-          console.log("Fetched albums info:", albums);
-          console.log("Fetched track info:", trackInfo);
-
           // Find the first album with year information
           const firstAlbum = albums && albums.length > 0 ? albums[0] : null;
 
@@ -67,14 +63,14 @@ export function TrackInfoPage({ trackArtist, trackTitle }: TrackInfoParams) {
       fetchMusicBrainzData();
 
       // Get the artist image using RadioHeartService
-      // radioHeartService.getArtistImage(
-      //   artist,
-      //   title,
-      //   artistImage,
-      //   (imageUrl) => {
-      //     setArtistImage(imageUrl);
-      //   }
-      // );
+      radioHeartService.getArtistImage(
+        artist,
+        title,
+        artistImage,
+        (imageUrl) => {
+          setArtistImage(imageUrl);
+        }
+      );
     }
   }, [artist, title, artistImage]);
 

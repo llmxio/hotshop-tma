@@ -1,6 +1,6 @@
 import "@telegram-apps/telegram-ui/dist/styles.css";
-// import { TonConnectUIProvider } from "@tonconnect/ui-react";
-// import { tonConnectOptions } from "./utils/ton-connect";
+import { TonConnectUIProvider } from "@tonconnect/ui-react";
+import { tonConnectOptions } from "./utils/ton-connect";
 
 import {
   isMiniAppDark,
@@ -21,10 +21,10 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { RadioGlobalFooter } from "./components/Radio/RadioGlobalFooter";
+import { RadioPlayerProvider } from "./components/Radio/RadioPlayerContext";
 import { main } from "./main";
 import { mockEnv } from "./mock";
-import { RadioPlayerProvider } from "./components/Radio/RadioPlayerContext";
-import { RadioGlobalFooter } from "./components/Radio/RadioGlobalFooter";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -80,7 +80,6 @@ export async function clientLoader({
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const isDark = useSignal(isMiniAppDark);
-
   return (
     <html lang="en">
       <head>
@@ -90,12 +89,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <RadioPlayerProvider>
-          <AppRoot appearance={isDark ? "dark" : "light"} platform="base">
-            {children}
-            <RadioGlobalFooter />
-          </AppRoot>
-        </RadioPlayerProvider>
+        <TonConnectUIProvider {...tonConnectOptions}>
+          <RadioPlayerProvider>
+            <AppRoot appearance={isDark ? "dark" : "light"} platform="base">
+              {children}
+              <RadioGlobalFooter />
+            </AppRoot>
+          </RadioPlayerProvider>
+        </TonConnectUIProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -112,30 +113,18 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
-  let stack: string | undefined;
-
-  if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
-      error.status === 404
-        ? "The requested page could not be found."
-        : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
-  }
-
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <div>
+      <p>An unhandled error occurred:</p>
+      <blockquote>
+        <code>
+          {error instanceof Error
+            ? error.message
+            : typeof error === "string"
+            ? error
+            : JSON.stringify(error)}
+        </code>
+      </blockquote>
+    </div>
   );
 }

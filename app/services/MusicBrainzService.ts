@@ -98,6 +98,9 @@ export class MusicBrainzService {
 
       if (response.artists && response.artists.length > 0) {
         const artist = response.artists[0];
+
+        console.log("Artist found:", artist);
+
         return {
           name: artist.name,
           mbid: artist.id,
@@ -122,12 +125,15 @@ export class MusicBrainzService {
   async getArtistById(mbid: string): Promise<ArtistInfo | null> {
     try {
       const artist = await this.api.lookup("artist", mbid, [
+        "artist-rels",
         "recordings",
         "releases",
       ]);
 
       // Extract Wikipedia/Wikidata links for bio fetching
       let wikiDataId = null;
+
+      console.log("Artist relations:", artist.relations);
 
       if (artist.relations) {
         const wikiDataRel = artist.relations.find(
@@ -177,30 +183,35 @@ export class MusicBrainzService {
 
     try {
       const response = await this.api.browse(
-        "release",
+        "release-group",
         {
-          track_artist: artistMbid,
-          limit: 0,
+          artist: artistMbid,
+          limit: limit,
           offset: 0,
           // type: "album",
-        },
-        ["url-rels", "isrcs", "recordings"]
+        }
+        // ["url-rels", "isrcs", "recordings"]
+        // ["releases", "artists"]
       );
 
       const albums: AlbumInfo[] = [];
 
-      for (const release of response["releases"]) {
+      console.log("Albums response:", response);
+
+      for (const release of response["release-groups"]) {
         const album: AlbumInfo = {
           name: release.title,
           mbid: release.id,
-          // type: release["primary-type"],
-          // year: release["first-release-date"]?.split("-")[0] || undefined,
+          // Extract year from first-release-date if available
+          year: release["first-release-date"]?.split("-")[0] || undefined,
+          type: release["primary-type"],
         };
 
         // Add cover art if available
         try {
           const coverUrl = await this.getAlbumCoverUrl(release.id);
           if (coverUrl) {
+            console.log("Cover URL:", coverUrl);
             album.cover = coverUrl;
           }
         } catch (err) {

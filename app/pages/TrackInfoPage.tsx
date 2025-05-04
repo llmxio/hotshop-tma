@@ -28,33 +28,55 @@ export function TrackInfoPage({ trackArtist, trackTitle }: TrackInfoParams) {
   // Fetch artist image and additional details when component mounts
   useEffect(() => {
     if (artist && title) {
-      const getArtistFromMB = async () => {
-        return await musicBrainzService.searchArtist(artist);
+      // Set up loading state
+      const fetchMusicBrainzData = async () => {
+        try {
+          // Use the comprehensive method to get all information in one call
+          const {
+            artist: artistInfo,
+            albums,
+            track: trackInfo,
+          } = await musicBrainzService.getFullTrackInfo(artist, title);
+
+          console.log("Fetched artist info:", artistInfo);
+          console.log("Fetched albums info:", albums);
+          console.log("Fetched track info:", trackInfo);
+
+          // Find the first album with year information
+          const firstAlbum = albums && albums.length > 0 ? albums[0] : null;
+
+          // Update track details with the fetched info
+          setTrackDetails({
+            album: firstAlbum?.name || "Unknown Album",
+            year: firstAlbum?.year || "",
+            genre: artistInfo?.country || "", // Use country as genre if no genres available
+            bio: artistInfo?.bio || `${artist} is a music artist.`,
+          });
+
+          console.log("Music data loaded:", {
+            artist: artistInfo,
+            albums,
+            track: trackInfo,
+          });
+        } catch (error) {
+          console.error("Error fetching music data:", error);
+        }
       };
 
-      const artfistFromMB = getArtistFromMB();
+      // Start data fetching
+      fetchMusicBrainzData();
 
-      console.log("artfistFromMB", artfistFromMB);
-
-      radioHeartService.getArtistImage(
-        artist,
-        title,
-        artistImage,
-        (imageUrl) => {
-          setArtistImage(imageUrl);
-        }
-      );
-
-      // Mock fetch additional details (in a real app, you would call an API)
-      // This would be replaced with actual API calls in production
-      setTrackDetails({
-        album: "Unknown Album",
-        year: "2024",
-        genre: "Pop",
-        bio: `${artist} is a music artist known for their unique style and sound.`,
-      });
+      // Get the artist image using RadioHeartService
+      // radioHeartService.getArtistImage(
+      //   artist,
+      //   title,
+      //   artistImage,
+      //   (imageUrl) => {
+      //     setArtistImage(imageUrl);
+      //   }
+      // );
     }
-  }, [artist, title]);
+  }, [artist, title, artistImage]);
 
   if (!artist || !title) {
     return <Section header="Track Info">Track not found</Section>;
@@ -63,8 +85,8 @@ export function TrackInfoPage({ trackArtist, trackTitle }: TrackInfoParams) {
   return (
     <>
       <Section header="Track Info">
-        <Cell subtitle={title} before={<Avatar size={48} src={artistImage} />}>
-          {artist}
+        <Cell subtitle={artist} before={<Avatar size={48} src={artistImage} />}>
+          {title}
         </Cell>
 
         {trackDetails.album && (

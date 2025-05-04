@@ -1,6 +1,6 @@
 import "@telegram-apps/telegram-ui/dist/styles.css";
-import { TonConnectUIProvider } from "@tonconnect/ui-react";
-import { tonConnectOptions } from "./utils/ton-connect";
+// import { TonConnectUIProvider } from "@tonconnect/ui-react";
+// import { tonConnectOptions } from "./utils/ton-connect";
 
 import {
   isMiniAppDark,

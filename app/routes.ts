@@ -14,6 +14,6 @@ export default [
     route("home", "routes/home.tsx"),
     route("about", "routes/about.tsx"),
     route("queue", "routes/queue.tsx"),
-    route("track/:trackArtist/:trackName", "routes/track.tsx"),
+    route("track/:trackArtist/:trackTitle", "routes/track.tsx"),
   ]),
 ] satisfies RouteConfig;

@@ -13,6 +13,8 @@ export function publicUrl(path: string): string {
     baseUrl += "/";
   }
 
+  console.log("baseUrl", baseUrl);
+
   let isBaseAbsolute = false;
   try {
     new URL(baseUrl);

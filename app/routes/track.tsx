@@ -3,10 +3,10 @@ import { TrackInfoPage } from "@/pages/TrackInfoPage";
 import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 
 export function meta({ params }: Route.MetaArgs) {
-  const { trackArtist, trackName } = params;
+  const { trackArtist, trackTitle } = params;
 
   const artist = trackArtist ? decodeURIComponent(trackArtist) : "Artist";
-  const title = trackName ? decodeURIComponent(trackName) : "Track";
+  const title = trackTitle ? decodeURIComponent(trackTitle) : "Track";
 
   return [
     { title: `${artist} - ${title} | Hot Shop Radio` },
@@ -19,8 +19,7 @@ export function meta({ params }: Route.MetaArgs) {
 
 export async function loader({ params, context }: Route.LoaderArgs) {
   return {
-    trackArtist: params.trackArtist,
-    trackName: params.trackName,
+    ...params,
     message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE,
   };
 }
@@ -37,7 +36,7 @@ export async function clientLoader({
     return { ...launchParams, ...serverParams };
   } catch (error) {
     console.error("track info", error);
-    return { trackArtist: params.trackArtist, trackName: params.trackName };
+    return { trackArtist: params.trackArtist, trackTitle: params.trackTitle };
   }
 }
 
@@ -45,7 +44,7 @@ export default function Track({ loaderData }: Route.ComponentProps) {
   return (
     <TrackInfoPage
       trackArtist={loaderData.trackArtist}
-      trackTitle={loaderData.trackName}
+      trackTitle={loaderData.trackTitle}
     />
   );
 }

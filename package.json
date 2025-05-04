@@ -15,6 +15,7 @@
     "@telegram-apps/telegram-ui": "^2.1.8",
     "@tonconnect/ui-react": "^2.1.0",
     "isbot": "^5.1.17",
+    "musicbrainz-api": "^0.25.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^7.5.2"

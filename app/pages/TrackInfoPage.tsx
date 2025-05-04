@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Section, Cell, Avatar, Info } from "@telegram-apps/telegram-ui";
-import { radioHeartService } from "../services/RadioHeartService";
+import { radioHeartService } from "@/services/RadioHeartService";
+import { musicBrainzService } from "@/services/MusicBrainzService";
 
 // Define param types as a Record type for useParams
 type TrackInfoParams = {
@@ -27,6 +28,14 @@ export function TrackInfoPage({ trackArtist, trackTitle }: TrackInfoParams) {
   // Fetch artist image and additional details when component mounts
   useEffect(() => {
     if (artist && title) {
+      const getArtistFromMB = async () => {
+        return await musicBrainzService.searchArtist(artist);
+      };
+
+      const artfistFromMB = getArtistFromMB();
+
+      console.log("artfistFromMB", artfistFromMB);
+
       radioHeartService.getArtistImage(
         artist,
         title,

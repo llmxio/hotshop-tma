@@ -34,7 +34,7 @@ export const RadioCurrentStation: React.FC = () => {
       <Cell
         subtitle={
           isStationPlaying && currentSong.artist
-            ? currentSong.title
+            ? currentSong.artist
             : defaultStation.genre
         }
         before={
@@ -55,8 +55,8 @@ export const RadioCurrentStation: React.FC = () => {
           )
         }
       >
-        {isStationPlaying && currentSong.artist
-          ? currentSong.artist
+        {isStationPlaying && currentSong.title
+          ? currentSong.title
           : stationName}
       </Cell>
     </Section>

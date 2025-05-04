@@ -155,18 +155,18 @@ export class RadioHeartService {
 
   /**
    * Get artist image from external API
-   * @param songTitle Full song title string
+   * @param title Full song title string
    * @param defaultLogo Default image URL to use if fetch fails
    * @param onImageFetched Callback function that receives the image URL
    */
   getArtistImage(
-    songArtist: string,
-    songTitle: string,
+    artist: string,
+    title: string,
     defaultLogo: string,
     onImageFetched: (imageUrl: string) => void
   ): void {
     fetch(
-      `https://image-fetcher.radioheart.ru/api/get-image?artist=${songArtist}&title=${songTitle}`
+      `https://image-fetcher.radioheart.ru/api/get-image?artist=${artist}&title=${title}`
     )
       .then((response) => {
         if (!response.ok) {

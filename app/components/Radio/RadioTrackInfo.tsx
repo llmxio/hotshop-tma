@@ -65,11 +65,11 @@ export const RadioTrackInfo: React.FC<RadioTrackInfoProps> = ({
     </Cell>
   ) : (
     <Cell
-      subtitle={title}
+      subtitle={artist}
       before={<Avatar size={48} src={artistImage} />}
       after={time ? <Info type="text">{time}</Info> : undefined}
     >
-      {artist}
+      {title}
     </Cell>
   );
 

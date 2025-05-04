@@ -53,8 +53,8 @@ export async function clientLoader({
   }
 }
 
-// export const Layout = RootWithBack;
-
 export default function Queue({ loaderData }: Route.ComponentProps) {
+  // console.log("queue", loaderData);
+
   return <QueuePage recentTracks={loaderData.recentTracks} />;
 }

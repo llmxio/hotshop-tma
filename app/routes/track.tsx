@@ -5,6 +5,7 @@ import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 
 export function meta({ params }: Route.MetaArgs) {
   const { trackArtist, trackName } = params;
+
   const artist = trackArtist ? decodeURIComponent(trackArtist) : "Artist";
   const title = trackName ? decodeURIComponent(trackName) : "Track";
 
@@ -17,7 +18,7 @@ export function meta({ params }: Route.MetaArgs) {
   ];
 }
 
-export function loader({ params, context }: Route.LoaderArgs) {
+export async function loader({ params, context }: Route.LoaderArgs) {
   return {
     trackArtist: params.trackArtist,
     trackName: params.trackName,
@@ -25,11 +26,11 @@ export function loader({ params, context }: Route.LoaderArgs) {
   };
 }
 
-export const clientLoader = async ({
+export async function clientLoader({
   request,
   serverLoader,
   params,
-}: Route.ClientLoaderArgs) => {
+}: Route.ClientLoaderArgs) {
   try {
     const serverParams = await serverLoader();
     const launchParams = retrieveLaunchParams();
@@ -43,10 +44,8 @@ export const clientLoader = async ({
     console.error("track info", error);
     return { trackArtist: params.trackArtist, trackName: params.trackName };
   }
-};
+}
 
-// export const Layout = RootWithBack;
-
-export default function Track() {
+export default function Track({ loaderData }: Route.ComponentProps) {
   return <TrackInfoPage />;
 }

@@ -1,7 +1,7 @@
 import type { Route } from "./+types/about";
 import { AboutPage } from "~/pages/AboutPage";
 
-export async function meta({}: Route.MetaArgs) {
+export function meta({}: Route.MetaArgs) {
   return [
     { title: "New React Router App" },
     { name: "description", content: "Welcome to ABOUT Router!" },

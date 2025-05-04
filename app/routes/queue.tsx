@@ -1,9 +1,9 @@
 import type { Route } from "./+types/queue";
 
-import { QueuePage } from "~/pages/QueuePage";
-import RootWithBack from "~/layouts/RootWithBack";
+import { QueuePage } from "@/pages/QueuePage";
+import RootWithBack from "@/layouts/RootWithBack";
 import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
-import { RadioHeartService } from "~/services/RadioHeartService";
+import { RadioHeartService } from "@/services/RadioHeartService";
 
 export function meta({}: Route.MetaArgs) {
   return [

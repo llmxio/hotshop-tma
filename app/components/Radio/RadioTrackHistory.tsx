@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Section, List, Button, Spinner } from "@telegram-apps/telegram-ui";
 import { RadioTrackInfo } from "./RadioTrackInfo";
-import { radioHeartService } from "~/services/RadioHeartService";
-import type { Track } from "~/services/RadioHeartService";
+import { radioHeartService } from "@/services/RadioHeartService";
+import type { Track } from "@/services/RadioHeartService";
 
 interface RadioTrackHistoryProps {
   initialTracks?: Track[];

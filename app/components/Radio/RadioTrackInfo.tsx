@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Cell, Info, Avatar } from "@telegram-apps/telegram-ui";
+import { Cell, Avatar, Info } from "@telegram-apps/telegram-ui";
 
 import {
   getArtistFromTitle,
@@ -7,7 +7,20 @@ import {
   getArtistImage,
 } from "./RadioHelpers";
 
-import { Link } from "~/components/Link/Link";
+import { Link } from "@/components/Link";
+
+// Constants
+const DEFAULT_IMAGE =
+  "https://billing.radioheart.ru/public_pages/assets/img/noimage.jpg";
+
+// Helper function to format time as HH:MM
+const formatTime = (timeString?: string) => {
+  if (!timeString) return "";
+  return new Date(timeString).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
 
 export interface RadioTrackInfoProps {
   name: string;
@@ -21,7 +34,7 @@ export const RadioTrackInfo: React.FC<RadioTrackInfoProps> = ({
   name,
   index = 0,
   time,
-  defaultImage = "https://billing.radioheart.ru/public_pages/assets/img/noimage.jpg",
+  defaultImage = DEFAULT_IMAGE,
   dense = false,
 }) => {
   const artist = getArtistFromTitle(name);

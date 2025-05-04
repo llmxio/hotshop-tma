@@ -2,7 +2,8 @@
  * RadioHeartService - Service for handling RadioHeart API calls
  */
 
-import type { RadioTrackInfoProps } from "~/components/Radio/RadioTrackInfo";
+import { useCallback, useEffect, useState } from "react";
+import type { RadioTrackInfoProps } from "@/components/Radio/RadioTrackInfo";
 
 export type Track = RadioTrackInfoProps;
 

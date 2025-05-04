@@ -1,9 +1,9 @@
+import { type Track, radioHeartService } from "@/services/RadioHeartService";
+import { Button, List, Section, Spinner } from "@telegram-apps/telegram-ui";
 import React, { useEffect, useState } from "react";
-import { Section, List, Button, Spinner } from "@telegram-apps/telegram-ui";
-import { useRadioPlayer } from "./RadioPlayerContext";
 import { RadioTrackInfo } from "./RadioTrackInfo";
-import { radioHeartService } from "~/services/RadioHeartService";
-import type { Track } from "~/services/RadioHeartService";
+
+import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 
 export const RadioTrackQueue: React.FC = () => {
   const { playing } = useRadioPlayer();

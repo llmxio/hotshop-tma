@@ -1,6 +1,6 @@
 import React from "react";
 import { Section, Cell, Image, Button } from "@telegram-apps/telegram-ui";
-import { useRadioPlayer } from "./RadioPlayerContext";
+import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 
 // Default station information for fallback
 const defaultStation = {

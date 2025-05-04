@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Section, Cell, Info } from "@telegram-apps/telegram-ui";
-import { useRadioPlayer } from "./RadioPlayerContext";
-import { radioHeartService } from "~/services/RadioHeartService";
+import { Cell, Info } from "@telegram-apps/telegram-ui";
+import { useRadioPlayer } from "@/hooks/useRadioPlayer";
+import { radioHeartService } from "@/services/RadioHeartService";
 import { FaUsers } from "react-icons/fa";
 
 interface RadioListenerCountProps {

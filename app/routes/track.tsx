@@ -1,6 +1,6 @@
 import type { Route } from "./+types/track";
-import { TrackInfoPage } from "~/pages/TrackInfoPage";
-import RootWithBack from "~/layouts/RootWithBack";
+import { TrackInfoPage } from "@/pages/TrackInfoPage";
+import RootWithBack from "@/layouts/RootWithBack";
 import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 
 export function meta({ params }: Route.MetaArgs) {

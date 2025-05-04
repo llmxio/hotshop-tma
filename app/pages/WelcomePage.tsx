@@ -1,6 +1,7 @@
+import React from "react";
 import { TonConnectButton } from "@tonconnect/ui-react";
-import logoDark from "~/assets/logo-dark.svg";
-import logoLight from "~/assets/logo-light.svg";
+import logoDark from "@/assets/logo-dark.svg";
+import logoLight from "@/assets/logo-light.svg";
 
 export function WelcomePage({ message }: { message: string }) {
   return (

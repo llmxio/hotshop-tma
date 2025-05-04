@@ -1,10 +1,8 @@
-import { RadioCurrentStation } from "../components/Radio/RadioCurrentStation";
-import { RadioCurrentArtist } from "../components/Radio/RadioCurrentArtist";
-import { RadioCurrentAlbum } from "../components/Radio/RadioCurrentAlbum";
-import { RadioTrackHistory } from "../components/Radio/RadioTrackHistory";
-import { RadioTrackQueue } from "../components/Radio/RadioTrackQueue";
-import { RadioListenerCount } from "../components/Radio/RadioListenerCount";
-import { Section } from "@telegram-apps/telegram-ui";
+import {
+  RadioCurrentAlbum,
+  RadioCurrentArtist,
+  RadioCurrentStation,
+} from "@/components/Radio";
 
 export function RadioPage() {
   return (

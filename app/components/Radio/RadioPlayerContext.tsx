@@ -1,17 +1,12 @@
-import React, {
-  createContext,
-  useContext,
-  useRef,
-  useState,
-  useEffect,
-} from "react";
+import React, { createContext, useRef, useState, useEffect } from "react";
+
 import {
   getLocation,
   getArtistFromTitle,
   getSongFromTitle,
 } from "./RadioHelpers";
 
-interface RadioPlayerProps {
+export interface RadioPlayerProps {
   playing: boolean;
   currentStation: {
     src: string;
@@ -52,8 +47,6 @@ const defaultContext: RadioPlayerProps = {
 };
 
 export const RadioPlayerContext = createContext(defaultContext);
-
-export const useRadioPlayer = () => useContext(RadioPlayerContext);
 
 export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -241,3 +234,5 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
     </RadioPlayerContext.Provider>
   );
 };
+
+// export { RadioPlayerContext, RadioPlayerProvider };

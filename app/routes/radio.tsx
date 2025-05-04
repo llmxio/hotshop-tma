@@ -1,5 +1,5 @@
 import type { Route } from "./+types/radio";
-import { RadioPage } from "~/pages/RadioPage";
+import { RadioPage } from "@/pages/RadioPage";
 import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 
 export function meta({}: Route.MetaArgs) {

@@ -1,6 +1,4 @@
-import React from "react";
-import { RadioCurrentStation } from "~/components/Radio/RadioCurrentStation";
-import { RadioTrackHistory } from "~/components/Radio/RadioTrackHistory";
+import { RadioCurrentStation, RadioTrackHistory } from "@/components/Radio";
 
 interface QueuePageProps {
   recentTracks?: any[];

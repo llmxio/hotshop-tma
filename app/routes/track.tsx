@@ -45,7 +45,7 @@ export default function Track({ loaderData }: Route.ComponentProps) {
   return (
     <TrackInfoPage
       trackArtist={loaderData.trackArtist}
-      trackName={loaderData.trackName}
+      trackTitle={loaderData.trackName}
     />
   );
 }

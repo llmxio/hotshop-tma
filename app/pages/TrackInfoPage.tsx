@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useEffect, useState } from "react";
 import { Section, Cell, Avatar, Info } from "@telegram-apps/telegram-ui";
 import { radioHeartService } from "../services/RadioHeartService";
 
 // Define param types as a Record type for useParams
 type TrackInfoParams = {
   trackArtist: string;
-  trackName: string;
+  trackTitle: string;
 };
 
-export function TrackInfoPage({ trackArtist, trackName }: TrackInfoParams) {
-  // const { trackArtist, trackName } = useParams<TrackInfoParams>();
-
+export function TrackInfoPage({ trackArtist, trackTitle }: TrackInfoParams) {
   const [artistImage, setArtistImage] = useState<string>(
     "https://billing.radioheart.ru/public_pages/assets/img/noimage.jpg"
   );
@@ -25,7 +22,7 @@ export function TrackInfoPage({ trackArtist, trackName }: TrackInfoParams) {
 
   // Decode URI components
   const artist = trackArtist ? decodeURIComponent(trackArtist) : "";
-  const title = trackName ? decodeURIComponent(trackName) : "";
+  const title = trackTitle ? decodeURIComponent(trackTitle) : "";
 
   // Fetch artist image and additional details when component mounts
   useEffect(() => {

@@ -75,7 +75,12 @@ export const RadioTrackHistory: React.FC = () => {
       ) : (
         <List>
           {tracks.map((track, index) => (
-            <RadioTrackInfo key={index} name={track.name} index={0} />
+            <RadioTrackInfo
+              key={index}
+              name={track.name}
+              index={0}
+              time={track.time}
+            />
           ))}
         </List>
       )}

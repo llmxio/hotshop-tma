@@ -27,9 +27,9 @@ export const RadioCurrentStation: React.FC = () => {
   return (
     <Section
       header={<Section.Header large>{stationName}</Section.Header>}
-      footer={
-        <Section.Footer>{defaultStation.genre} streaming 24/7</Section.Footer>
-      }
+      // footer={
+      //   <Section.Footer>{defaultStation.genre} streaming 24/7</Section.Footer>
+      // }
     >
       <Cell
         subtitle={

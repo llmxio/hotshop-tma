@@ -9,17 +9,17 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export function loader({ context }: Route.LoaderArgs) {
+export async function loader({ context }: Route.LoaderArgs) {
   return {
     message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE,
   };
 }
 
-export const clientLoader = async ({
+export async function clientLoader({
   request,
   serverLoader,
   params,
-}: Route.ClientLoaderArgs) => {
+}: Route.ClientLoaderArgs) {
   try {
     const serverParams = await serverLoader();
     const launchParams = retrieveLaunchParams();
@@ -28,7 +28,7 @@ export const clientLoader = async ({
   } catch (error) {
     console.error("radio", error);
   }
-};
+}
 
 export default function Radio({ loaderData }: Route.ComponentProps) {
   // console.log("radio", loaderData);

@@ -95,7 +95,12 @@ export const RadioTrackQueue: React.FC = () => {
       ) : (
         <List>
           {tracks.map((track, index) => (
-            <RadioTrackInfo key={index} name={track.name} index={index + 1} />
+            <RadioTrackInfo
+              key={index}
+              name={track.name}
+              index={index + 1}
+              time={track.time}
+            />
           ))}
         </List>
       )}

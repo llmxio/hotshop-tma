@@ -5,6 +5,7 @@ import { useEffect } from "react";
 export default function RootNoBack() {
   useEffect(() => {
     if (!isBackButtonMounted()) return;
+
     if (hideBackButton.isAvailable()) {
       hideBackButton();
     }

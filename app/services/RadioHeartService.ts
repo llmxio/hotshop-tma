@@ -1,9 +1,4 @@
-/**
- * RadioHeartService - Service for handling RadioHeart API calls
- */
-
-import { useCallback, useEffect, useState } from "react";
-import type { RadioTrackInfoProps } from "@/components/Radio/RadioTrackInfo";
+import type { RadioTrackInfoProps } from "@/components/Radio";
 
 export type Track = RadioTrackInfoProps;
 
@@ -15,6 +10,49 @@ export interface ApiResponse {
 
 const BASE_API_URL = "https://a3.radioheart.ru/api/json";
 const DEFAULT_USER = "user8039";
+
+// Helper to parse URL
+export function getLocation(href: string) {
+  const match = href.match(
+    /^(https?:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)([\/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/
+  );
+  return (
+    match && {
+      protocol: match[1],
+      host: match[2],
+      hostname: match[3],
+      port: match[4],
+      pathname: match[5],
+      search: match[6],
+      hash: match[7],
+    }
+  );
+}
+
+// Helper functions to extract artist and title from song title
+export function getArtistFromTitle(trackTitle: string): string {
+  if (!trackTitle) return "";
+
+  let split = trackTitle.split(" | ");
+
+  if (split.length > 0) {
+    return split[1].split("-")[0].trim();
+  }
+
+  return trackTitle;
+}
+
+export function getSongFromTitle(trackTitle: string): string {
+  if (!trackTitle) return "";
+  
+  let split = trackTitle.split(" | ");
+
+  if (split.length > 0) {
+    return split[1].split("-")[1].trim();
+  }
+
+  return "";
+}
 
 export class RadioHeartService {
   private userLogin: string;
@@ -113,6 +151,41 @@ export class RadioHeartService {
       console.error("Error fetching listener count:", error);
       return 0;
     }
+  }
+
+  /**
+   * Get artist image from external API
+   * @param songTitle Full song title string
+   * @param defaultLogo Default image URL to use if fetch fails
+   * @param onImageFetched Callback function that receives the image URL
+   */
+  getArtistImage(
+    songTitle: string,
+    defaultLogo: string,
+    onImageFetched: (imageUrl: string) => void
+  ): void {
+    fetch(
+      `https://image-fetcher.radioheart.ru/api/get-image?artist=${getArtistFromTitle(
+        songTitle
+      )}&title=${getSongFromTitle(songTitle)}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data: any) => {
+        if (data.image) {
+          onImageFetched(data.image);
+        } else {
+          onImageFetched(defaultLogo);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        onImageFetched(defaultLogo);
+      });
   }
 
   // Helper method to build API URLs

@@ -1,7 +1,8 @@
-import { RadioCurrentAlbum, RadioCurrentArtist } from "@/components/Radio";
+import { RadioCurrentArtist } from "@/components/Radio/RadioCurrentArtist";
+import { RadioCurrentAlbum } from "@/components/Radio/RadioCurrentAlbum";
 import { RadioCurrentStation } from "@/components/Radio/RadioCurrentStation";
 
-export function RadioPage() {
+export function Radio() {
   return (
     <>
       <RadioCurrentStation />

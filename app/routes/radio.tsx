@@ -1,5 +1,5 @@
 import type { Route } from "./+types/radio";
-import { RadioPage } from "@/pages/RadioPage";
+import { Radio } from "@/pages/Radio"; // Updated import
 import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 
 export function meta({}: Route.MetaArgs) {
@@ -30,7 +30,7 @@ export async function clientLoader({
   }
 }
 
-export default function Radio({ loaderData }: Route.ComponentProps) {
+export default function RadioRoute({ loaderData }: Route.ComponentProps) {
   // console.log("radio", loaderData);
-  return <RadioPage />;
+  return <Radio />;
 }

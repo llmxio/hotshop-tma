@@ -21,7 +21,6 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
-import { RadioGlobalFooter } from "./components/Radio/RadioGlobalFooter";
 import { RadioPlayerProvider } from "./components/Radio/RadioPlayerContext";
 import { main } from "./main";
 import { mockEnv } from "./mock";
@@ -93,7 +92,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <RadioPlayerProvider>
             <AppRoot appearance={isDark ? "dark" : "light"} platform="base">
               {children}
-              <RadioGlobalFooter />
             </AppRoot>
           </RadioPlayerProvider>
         </TonConnectUIProvider>

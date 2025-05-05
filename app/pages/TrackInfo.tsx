@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Section, Cell, Avatar, Info } from "@telegram-apps/telegram-ui";
 import { radioHeartService } from "@/services/RadioHeartService";
 import { musicBrainzService } from "@/services/MusicBrainzService";
+import { useLoaderData } from "react-router";
 
 // Define param types as a Record type for useParams
 type TrackInfoParams = {
@@ -9,7 +10,22 @@ type TrackInfoParams = {
   trackTitle: string;
 };
 
-export function TrackInfoPage({ trackArtist, trackTitle }: TrackInfoParams) {
+export function TrackInfo() {
+  const { trackId } = useLoaderData<{ trackId: string }>();
+
+  return (
+    <div>
+      <h1>Track Info</h1>
+      <p>Track ID: {trackId}</p>
+      {/* Additional track info will be displayed here */}
+    </div>
+  );
+}
+
+export function TrackInfoComponent({
+  trackArtist,
+  trackTitle,
+}: TrackInfoParams) {
   const [artistImage, setArtistImage] = useState<string>(
     "https://billing.radioheart.ru/public_pages/assets/img/noimage.jpg"
   );
@@ -107,4 +123,4 @@ export function TrackInfoPage({ trackArtist, trackTitle }: TrackInfoParams) {
   );
 }
 
-export default TrackInfoPage;
+export default TrackInfo;

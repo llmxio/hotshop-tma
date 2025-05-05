@@ -1,26 +1,20 @@
 import type { Route } from "./+types/track";
-import { TrackInfoPage } from "@/pages/TrackInfoPage";
+import { TrackInfo } from "@/pages/TrackInfo"; // Updated import
 import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 
-export function meta({ params }: Route.MetaArgs) {
-  const { trackArtist, trackTitle } = params;
-
-  const artist = trackArtist ? decodeURIComponent(trackArtist) : "Artist";
-  const title = trackTitle ? decodeURIComponent(trackTitle) : "Track";
-
+export function meta({}: Route.MetaArgs) {
   return [
-    { title: `${artist} - ${title} | Hot Shop Radio` },
-    {
-      name: "description",
-      content: `Track information for ${artist} - ${title}`,
-    },
+    { title: "Track - Hot Shop Radio" },
+    { name: "description", content: "Track details for Hot Shop Radio" },
   ];
 }
 
-export async function loader({ params, context }: Route.LoaderArgs) {
+export async function loader({ context, params }: Route.LoaderArgs) {
+  const trackId = params.id || "";
+
   return {
-    ...params,
     message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE,
+    trackId,
   };
 }
 
@@ -35,16 +29,10 @@ export async function clientLoader({
 
     return { ...launchParams, ...serverParams };
   } catch (error) {
-    console.error("track info", error);
-    return { trackArtist: params.trackArtist, trackTitle: params.trackTitle };
+    console.error("track", error);
   }
 }
 
-export default function Track({ loaderData }: Route.ComponentProps) {
-  return (
-    <TrackInfoPage
-      trackArtist={loaderData.trackArtist}
-      trackTitle={loaderData.trackTitle}
-    />
-  );
+export default function TrackRoute({ loaderData }: Route.ComponentProps) {
+  return <TrackInfo />;
 }

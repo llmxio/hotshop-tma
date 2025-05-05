@@ -1,11 +1,11 @@
 import { RadioTrackHistory } from "@/components/Radio";
 import { RadioCurrentStation } from "@/components/Radio/RadioCurrentStation";
 
-interface QueuePageProps {
+interface QueueProps {
   recentTracks?: any[];
 }
 
-export function QueuePage({ recentTracks }: QueuePageProps) {
+export function Queue({ recentTracks }: QueueProps) {
   return (
     <>
       <RadioCurrentStation />

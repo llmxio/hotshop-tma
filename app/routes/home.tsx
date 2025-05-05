@@ -1,17 +1,35 @@
 import type { Route } from "./+types/home";
-import { WelcomePage } from "@/pages/WelcomePage";
+import { Home } from "@/pages/Home"; // Updated import
+import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Home - Hot Shop Radio" },
+    { name: "description", content: "Welcome to Hot Shop Radio!" },
   ];
 }
 
 export async function loader({ context }: Route.LoaderArgs) {
-  return { message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE };
+  return {
+    message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE,
+  };
 }
 
-export default function Home({ loaderData }: Route.ComponentProps) {
-  return <WelcomePage message={loaderData.message} />;
+export async function clientLoader({
+  request,
+  serverLoader,
+  params,
+}: Route.ClientLoaderArgs) {
+  try {
+    const serverParams = await serverLoader();
+    const launchParams = retrieveLaunchParams();
+
+    return { ...launchParams, ...serverParams };
+  } catch (error) {
+    console.error("home", error);
+  }
+}
+
+export default function HomeRoute({ loaderData }: Route.ComponentProps) {
+  return <Home />;
 }

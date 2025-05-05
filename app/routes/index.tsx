@@ -1,8 +1,9 @@
 import { Index } from "@/pages/Index";
-import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
-import RootNoBack from "@/layouts/RootNoBack";
-import { radioHeartService } from "@/services/RadioHeartService";
 import type { Track } from "@/services/RadioHeartService";
+import { radioHeartService } from "@/services/RadioHeartService";
+import {
+  retrieveLaunchParams
+} from "@telegram-apps/sdk-react";
 
 interface LoaderData {
   message?: string;

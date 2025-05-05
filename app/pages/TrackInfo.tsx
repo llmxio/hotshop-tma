@@ -1,34 +1,49 @@
 import { useEffect, useState } from "react";
-import { Section, Cell, Avatar, Info } from "@telegram-apps/telegram-ui";
+import {
+  Section,
+  Cell,
+  Avatar,
+  Info,
+  Spinner,
+} from "@telegram-apps/telegram-ui";
 import { radioHeartService } from "@/services/RadioHeartService";
 import { musicBrainzService } from "@/services/MusicBrainzService";
-import { useLoaderData } from "react-router";
+import { useParams } from "react-router";
 
-// Define param types as a Record type for useParams
+// Define param types for useParams
 type TrackInfoParams = {
-  trackArtist: string;
-  trackTitle: string;
+  trackArtist?: string;
+  trackTitle?: string;
 };
 
 export function TrackInfo() {
-  const { trackId } = useLoaderData<{ trackId: string }>();
+  const { trackArtist, trackTitle } = useParams<TrackInfoParams>();
+
+  if (!trackArtist || !trackTitle) {
+    return (
+      <Section header="Track Info">
+        <Cell>Track information not found</Cell>
+      </Section>
+    );
+  }
 
   return (
-    <div>
-      <h1>Track Info</h1>
-      <p>Track ID: {trackId}</p>
-      {/* Additional track info will be displayed here */}
-    </div>
+    <TrackInfoComponent trackArtist={trackArtist} trackTitle={trackTitle} />
   );
 }
 
 export function TrackInfoComponent({
   trackArtist,
   trackTitle,
-}: TrackInfoParams) {
+}: {
+  trackArtist: string;
+  trackTitle: string;
+}) {
   const [artistImage, setArtistImage] = useState<string>(
     "https://billing.radioheart.ru/public_pages/assets/img/noimage.jpg"
   );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [trackDetails, setTrackDetails] = useState<{
     album?: string;
@@ -44,7 +59,8 @@ export function TrackInfoComponent({
   // Fetch artist image and additional details when component mounts
   useEffect(() => {
     if (artist && title) {
-      // Set up loading state
+      setLoading(true);
+
       const fetchMusicBrainzData = async () => {
         try {
           // Use the comprehensive method to get all information in one call
@@ -72,6 +88,9 @@ export function TrackInfoComponent({
           });
         } catch (error) {
           console.error("Error fetching music data:", error);
+          setError("Failed to load track information");
+        } finally {
+          setLoading(false);
         }
       };
 
@@ -88,10 +107,28 @@ export function TrackInfoComponent({
         }
       );
     }
-  }, [artist, title, artistImage]);
+  }, [artist, title]);
 
   if (!artist || !title) {
     return <Section header="Track Info">Track not found</Section>;
+  }
+
+  if (loading) {
+    return (
+      <Section header="Track Info">
+        <Cell>
+          <Spinner size="m" />
+        </Cell>
+      </Section>
+    );
+  }
+
+  if (error) {
+    return (
+      <Section header="Track Info">
+        <Cell>{error}</Cell>
+      </Section>
+    );
   }
 
   return (

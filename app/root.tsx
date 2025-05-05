@@ -22,6 +22,8 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { RadioPlayerProvider } from "./components/Radio/RadioPlayerContext";
+import { GlobalRadioPlayer } from "./components/Radio";
+import { AppNavigation } from "./components/AppNavigation";
 import { main } from "./main";
 import { mockEnv } from "./mock";
 import { NotFound } from "@/pages/NotFound";
@@ -57,6 +59,8 @@ export async function clientLoader({
   try {
     await mockEnv();
 
+    // TODO: Replace with proper method to get launch params outside of React components
+    // Hooks can't be used here - this will need to be refactored
     const launchParams = retrieveLaunchParams();
     const { tgWebAppPlatform: platform } = launchParams;
 
@@ -92,7 +96,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <TonConnectUIProvider {...tonConnectOptions}>
           <RadioPlayerProvider>
             <AppRoot appearance={isDark ? "dark" : "light"} platform="base">
-              {children}
+              <div className="app-container">
+                <GlobalRadioPlayer mini />
+                <div className="app-content">{children}</div>
+                <AppNavigation />
+              </div>
             </AppRoot>
           </RadioPlayerProvider>
         </TonConnectUIProvider>

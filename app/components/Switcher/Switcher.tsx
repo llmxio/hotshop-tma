@@ -11,6 +11,7 @@ interface SwitcherProps {
 interface SwitcherItemProps {
   title: string;
   icon?: React.ReactNode;
+  label?: React.ReactNode;
   selected?: boolean;
   onClick?: () => void;
   children: ReactNode;
@@ -20,14 +21,21 @@ interface SwitcherItemProps {
 const SwitcherItem: React.FC<SwitcherItemProps> = ({
   title,
   icon,
+  label,
   selected,
   onClick,
   children,
 }) => {
+  // Only use the text prop if no custom label is provided
+  // This prevents duplication of the title when custom content is used
   return (
-    <Tabbar.Item selected={selected} onClick={onClick}>
-      {icon && icon}
-      {/* {title} */}
+    <Tabbar.Item
+      selected={selected}
+      onClick={onClick}
+      text={label ? undefined : title}
+      aria-label={title} // Keep title for accessibility
+    >
+      {icon || label}
     </Tabbar.Item>
   );
 };
@@ -61,8 +69,8 @@ const Switcher: ISwitcher = ({
 
   // Render the Tabbar and content
   return (
-    <div>
-      <div>{activeContent}</div>
+    <div className="switcher-container">
+      <div className="switcher-content">{activeContent}</div>
       <Tabbar className={className}>
         {tabs.map((tab, index) =>
           React.cloneElement(tab as React.ReactElement, {

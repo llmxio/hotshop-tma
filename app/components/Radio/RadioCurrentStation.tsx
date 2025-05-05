@@ -1,6 +1,7 @@
 import React from "react";
 import { Section, Cell, Image, Button } from "@telegram-apps/telegram-ui";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
+import { Link } from "@/components/Link";
 
 // Default station information for fallback
 const defaultStation = {
@@ -24,13 +25,17 @@ export const RadioCurrentStation: React.FC = () => {
 
   const isStationPlaying = playing && currentStation.src === stationSrc;
 
-  return (
-    <Section
-      header={<Section.Header large>{stationName}</Section.Header>}
-      footer={
-        <Section.Footer>{defaultStation.genre} streaming 24/7</Section.Footer>
-      }
-    >
+  // Create track URL for navigation - using trackArtist and trackTitle params to match route definition
+  const trackUrl =
+    isStationPlaying && currentSong.artist && currentSong.title
+      ? `/track/${encodeURIComponent(currentSong.artist)}/${encodeURIComponent(
+          currentSong.title
+        )}`
+      : null;
+
+  // Render the cell content
+  const renderCellContent = () => {
+    return (
       <Cell
         subtitle={
           isStationPlaying && currentSong.artist
@@ -45,11 +50,23 @@ export const RadioCurrentStation: React.FC = () => {
         }
         after={
           isStationPlaying ? (
-            <Button size="s" onClick={stop}>
+            <Button
+              size="s"
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent triggering the Link when clicking the button
+                stop();
+              }}
+            >
               Stop
             </Button>
           ) : (
-            <Button size="s" onClick={handlePlay}>
+            <Button
+              size="s"
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent triggering the Link when clicking the button
+                handlePlay();
+              }}
+            >
               Play
             </Button>
           )
@@ -59,6 +76,24 @@ export const RadioCurrentStation: React.FC = () => {
           ? currentSong.title
           : stationName}
       </Cell>
+    );
+  };
+
+  return (
+    <Section
+      header={<Section.Header large>{stationName}</Section.Header>}
+      footer={
+        <Section.Footer>{defaultStation.genre} streaming 24/7</Section.Footer>
+      }
+    >
+      {trackUrl &&
+      isStationPlaying &&
+      currentSong.artist &&
+      currentSong.title ? (
+        <Link to={trackUrl}>{renderCellContent()}</Link>
+      ) : (
+        renderCellContent()
+      )}
     </Section>
   );
 };

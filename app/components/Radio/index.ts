@@ -9,3 +9,4 @@ export {
   type RadioPlayerProps,
   RadioPlayerContext,
 } from "./RadioPlayerContext";
+export { GlobalRadioPlayer } from "./GlobalRadioPlayer";

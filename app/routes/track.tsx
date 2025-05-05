@@ -1,20 +1,37 @@
 import type { Route } from "./+types/track";
-import { TrackInfo } from "@/pages/TrackInfo"; // Updated import
-import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
+import { TrackInfo } from "@/pages/TrackInfo";
+import {
+  retrieveLaunchParams,
+  useLaunchParams,
+} from "@telegram-apps/sdk-react";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ params }: Route.MetaArgs) {
+  // Use params to dynamically set the meta title if available
+  const artist = params.trackArtist
+    ? decodeURIComponent(params.trackArtist)
+    : "";
+  const title = params.trackTitle ? decodeURIComponent(params.trackTitle) : "";
+
+  const trackTitle =
+    artist && title
+      ? `${artist} - ${title} | Hot Shop Radio`
+      : "Track - Hot Shop Radio";
+
   return [
-    { title: "Track - Hot Shop Radio" },
-    { name: "description", content: "Track details for Hot Shop Radio" },
+    { title: trackTitle },
+    { name: "description", content: `Track details for ${artist} - ${title}` },
   ];
 }
 
 export async function loader({ context, params }: Route.LoaderArgs) {
-  const trackId = params.id || "";
+  // Extract artist and title from URL params
+  const trackArtist = params.trackArtist || "";
+  const trackTitle = params.trackTitle || "";
 
   return {
     message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE,
-    trackId,
+    trackArtist,
+    trackTitle,
   };
 }
 
@@ -29,7 +46,8 @@ export async function clientLoader({
 
     return { ...launchParams, ...serverParams };
   } catch (error) {
-    console.error("track", error);
+    console.error("track route error:", error);
+    return { error: "Failed to load track data" };
   }
 }
 

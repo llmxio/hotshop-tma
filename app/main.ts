@@ -11,7 +11,7 @@ import {
   mockTelegramEnv,
   type ThemeParams,
   themeParamsState,
-  retrieveLaunchParams,
+  retrieveLaunchParams, // Keep for non-component usage
   emitEvent,
   isMiniAppCssVarsBound,
   bindMiniAppCssVars,

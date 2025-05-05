@@ -1,41 +1,24 @@
 import React from "react";
-import { RadioCurrentStation } from "@/components/Radio/RadioCurrentStation";
-import { Switcher } from "@/components/Switcher";
-import { RadioCurrentAlbum } from "@/components/Radio/RadioCurrentAlbum";
-import { RadioCurrentArtist } from "@/components/Radio/RadioCurrentArtist";
+import { RadioCurrentArtist, RadioCurrentAlbum } from "@/components/Radio";
 import { RadioTrackHistory } from "@/components/Radio";
 import type { Track } from "@/services/RadioHeartService";
-import { FaMusic, FaList } from "react-icons/fa";
+import { RadioListenerCount } from "@/components/Radio/RadioListenerCount";
+import { Section } from "@telegram-apps/telegram-ui";
 
 interface IndexProps {
   recentTracks?: Track[];
 }
 
+// The Index page now just displays the Radio content since navigation is handled globally
 export function Index({ recentTracks = [] }: IndexProps) {
-  // Create radio content and queue content outside of JSX for readability
-  const radioContent = (
+  // Create radio content without RadioCurrentStation (now handled by GlobalRadioPlayer)
+  return (
     <>
-      <RadioCurrentStation />
       <RadioCurrentArtist />
       <RadioCurrentAlbum />
+      <Section header="Station Info">
+        <RadioListenerCount />
+      </Section>
     </>
-  );
-
-  const queueContent = (
-    <>
-      <RadioCurrentStation />
-      <RadioTrackHistory initialTracks={recentTracks} />
-    </>
-  );
-
-  return (
-    <Switcher defaultActiveTab={0} className="app-main-tabbar">
-      <Switcher.Item title="Radio" icon={<FaMusic />}>
-        {radioContent}
-      </Switcher.Item>
-      <Switcher.Item title="Queue" icon={<FaList />}>
-        {queueContent}
-      </Switcher.Item>
-    </Switcher>
   );
 }

@@ -24,6 +24,7 @@ import "./app.css";
 import { RadioPlayerProvider } from "./components/Radio/RadioPlayerContext";
 import { main } from "./main";
 import { mockEnv } from "./mock";
+import { NotFound } from "@/pages/NotFound";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -111,6 +112,10 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+  // Use isRouteErrorResponse to check for 404/NotFound
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return <NotFound />;
+  }
   return (
     <div>
       <p>An unhandled error occurred:</p>

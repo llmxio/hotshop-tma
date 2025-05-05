@@ -14,5 +14,7 @@ export default [
     route("about", "routes/about.tsx"),
     route("queue", "routes/queue.tsx"),
     route("track/:trackArtist/:trackTitle", "routes/track.tsx"),
+    // Catch-all route for 404
+    route("*", "routes/notfound.tsx"),
   ]),
 ] satisfies RouteConfig;

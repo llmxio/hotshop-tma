@@ -33,12 +33,12 @@ const SwitcherItem: React.FC<SwitcherItemProps> = ({
 };
 
 // Define the Switcher component with a proper type definition that includes the Item property
-interface SwitcherComponent extends React.FC<SwitcherProps> {
+interface ISwitcher extends React.FC<SwitcherProps> {
   Item: React.FC<SwitcherItemProps>;
 }
 
 // Create the Switcher component
-const Switcher: SwitcherComponent = ({
+const Switcher: ISwitcher = ({
   defaultActiveTab = 0,
   children,
   className = "",

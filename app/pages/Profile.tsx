@@ -1,23 +1,17 @@
-import { useState } from "react";
+import { openLink } from "@telegram-apps/sdk-react";
 import {
-  Section,
-  List,
-  Cell,
   Avatar,
-  Divider,
+  Cell,
+  List,
   Placeholder,
+  Section,
   Text,
   Title,
 } from "@telegram-apps/telegram-ui";
-import {
-  useTonAddress,
-  TonConnectButton,
-  useTonWallet,
-} from "@tonconnect/ui-react";
-
-import "./Profile.css";
-
+import { TonConnectButton, useTonWallet } from "@tonconnect/ui-react";
+import { DisplayData } from "@/components/DisplayData";
 import { bem } from "@/css/bem";
+import "./Profile.css";
 
 const [, e] = bem("ton-connect-page");
 
@@ -31,14 +25,13 @@ export function Profile() {
         header="TON Connect"
         description={
           <>
-            <Text data-oid="u2i3kq1">
+            <Text>
               To display the data related to the TON Connect, it is required to
               connect your wallet
             </Text>
-            <TonConnectButton className={e("button")} data-oid="ip9gl8:" />
+            <TonConnectButton className={e("button")} />
           </>
         }
-        data-oid="anoiltd"
       />
     );
   }
@@ -49,10 +42,10 @@ export function Profile() {
   } = wallet;
 
   return (
-    <List data-oid="e9iae2o">
+    <List>
       {"imageUrl" in wallet && (
         <>
-          <Section data-oid="6grn:6_">
+          <Section>
             <Cell
               before={
                 <Avatar
@@ -60,36 +53,28 @@ export function Profile() {
                   alt="Provider logo"
                   width={60}
                   height={60}
-                  data-oid="nscyb2e"
                 />
               }
-              // after={<Navigation data-oid="q812c-n">About wallet</Navigation>}
+              // after={<Navigation>About wallet</Navigation>}
               subtitle={wallet.appName}
-              // onClick={(e) => {
-              //   e.preventDefault();
-              //   openLink(wallet.aboutUrl);
-              // }}
-              data-oid="8enj7vq"
+              onClick={(e) => {
+                e.preventDefault();
+                openLink(wallet.aboutUrl);
+              }}
             >
-              <Title level="3" data-oid="yraphbu">
-                {wallet.name}
-              </Title>
+              <Title level="3">{wallet.name}</Title>
             </Cell>
           </Section>
-          <TonConnectButton
-            className={e("button-connected")}
-            data-oid="4xcj7og"
-          />
+          <TonConnectButton className={e("button-connected")} />
         </>
       )}
-      {/* <DisplayData
+      <DisplayData
         header="Account"
         rows={[
           { title: "Address", value: address },
           { title: "Chain", value: chain },
           { title: "Public Key", value: publicKey },
         ]}
-        data-oid="75iyf8f"
       />
 
       <DisplayData
@@ -107,8 +92,7 @@ export function Profile() {
               .join(", "),
           },
         ]}
-        data-oid="u1w6.8h"
-      /> */}
+      />
     </List>
   );
 }

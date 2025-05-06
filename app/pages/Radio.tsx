@@ -1,8 +1,6 @@
-import React from "react";
-import { RadioCurrentArtist, RadioCurrentAlbum } from "@/components/Radio";
-import { RadioTrackHistory } from "@/components/Radio";
-import type { Track } from "@/services/RadioHeartService";
+import { RadioCurrentAlbum, RadioCurrentArtist } from "@/components/Radio";
 import { RadioListenerCount } from "@/components/Radio/RadioListenerCount";
+import type { Track } from "@/services/RadioHeartService";
 import { Section } from "@telegram-apps/telegram-ui";
 
 interface RadioProps {

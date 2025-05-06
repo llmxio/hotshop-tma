@@ -1,6 +1,6 @@
 export { RadioCurrentArtist } from "./RadioCurrentArtist";
 export { RadioCurrentAlbum } from "./RadioCurrentAlbum";
-export { RadioTrackHistory } from "./RadioTrackHistory";
+export { RadioPlaylist } from "./RadioPlaylist";
 export { RadioTrackQueue } from "./RadioTrackQueue";
 export { RadioTrackInfo } from "./RadioTrackInfo";
 export { type RadioTrackInfoProps } from "./RadioTrackInfo";

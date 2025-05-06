@@ -1,5 +1,5 @@
-import type { Route } from "./+types/queue";
-import { Queue } from "@/pages/Queue";
+import type { Route } from "./+types/history"; // Assuming types will be moved or this is a conventional path
+import { History } from "@/pages/History";
 import {
   retrieveLaunchParams,
   useLaunchParams,
@@ -8,8 +8,8 @@ import { radioHeartService } from "@/services/RadioHeartService";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Queue - Hot Shop Radio" },
-    { name: "description", content: "Track queue for Hot Shop Radio" },
+    { title: "History - Hot Shop Radio" },
+    { name: "description", content: "Track history for Hot Shop Radio" },
   ];
 }
 
@@ -52,6 +52,6 @@ export async function clientLoader({
   }
 }
 
-export default function QueueRoute({ loaderData }: Route.ComponentProps) {
-  return <Queue recentTracks={loaderData?.recentTracks} />;
+export default function HistoryRoute({ loaderData }: Route.ComponentProps) {
+  return <History recentTracks={loaderData?.recentTracks} />;
 }

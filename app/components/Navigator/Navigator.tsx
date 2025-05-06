@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabbar } from "@telegram-apps/telegram-ui";
-import { useSwipeable } from "react-swipeable";
+
 import { useLocation, useNavigate } from "react-router";
 import {
   Icon28MusicOutline,
@@ -17,7 +17,7 @@ export function Navigator() {
   const navigate = useNavigate();
 
   // Define all available routes for navigation
-  const routes = ["/", "/queue", "/profile"];
+  // const routes = ["/", "/queue", "/profile"];
 
   // Determine which tab should be active based on the current path
   const getActiveTab = () => {
@@ -38,30 +38,6 @@ export function Navigator() {
     }
   };
 
-  // Set up swipe handlers for navigation between tabs
-  const swipeHandlers = useSwipeable({
-    onSwipedLeft: () => {
-      console.log("Swiped left");
-      // When swiping left, go to the next tab (if not on the last tab)
-      if (activeTab >= 0 && activeTab < routes.length - 1) {
-        const nextTab = activeTab + 1;
-        navigate(routes[nextTab]);
-      }
-    },
-    onSwipedRight: () => {
-      console.log("Swiped right");
-      // When swiping right, go to the previous tab (if not on the first tab)
-      if (activeTab > 0) {
-        const prevTab = activeTab - 1;
-        navigate(routes[prevTab]);
-      }
-    },
-    // Configure swipe sensitivity
-    trackMouse: true, // Only track touch events, not mouse
-    swipeDuration: 70, // Adjust swipe duration for sensitivity
-    preventScrollOnSwipe: false, // Allow scrolling within pages
-  });
-
   // Create tab items with both icon and text for better UX
   const renderTabItem = (
     icon: React.ReactNode,
@@ -78,7 +54,7 @@ export function Navigator() {
 
   return (
     // <div className="app-navigation">
-    <Tabbar {...swipeHandlers}>
+    <Tabbar>
       <Tabbar.Item
         selected={activeTab === 0}
         onClick={() => handleNavigate("/", 0)}

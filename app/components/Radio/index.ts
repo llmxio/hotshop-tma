@@ -1,4 +1,3 @@
-export { RadioCurrentStation } from "./RadioCurrentStation";
 export { RadioCurrentArtist } from "./RadioCurrentArtist";
 export { RadioCurrentAlbum } from "./RadioCurrentAlbum";
 export { RadioTrackHistory } from "./RadioTrackHistory";
@@ -8,5 +7,6 @@ export { type RadioTrackInfoProps } from "./RadioTrackInfo";
 export {
   type RadioPlayerProps,
   RadioPlayerContext,
+  RadioPlayerProvider,
 } from "./RadioPlayerContext";
-export { GlobalRadioPlayer } from "./GlobalRadioPlayer";
+export { RadioPlayer } from "./RadioPlayer";

@@ -1,5 +1,6 @@
 import React from "react";
 import { Tabbar } from "@telegram-apps/telegram-ui";
+import { useSwipeable } from "react-swipeable";
 import { useLocation, useNavigate } from "react-router";
 import {
   Icon28MusicOutline,
@@ -15,12 +16,15 @@ export function Navigator() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Define all available routes for navigation
+  const routes = ["/", "/queue", "/profile"];
+
   // Determine which tab should be active based on the current path
   const getActiveTab = () => {
     const path = location.pathname;
     if (path === "/" || path.startsWith("/radio")) return 0;
     if (path.startsWith("/queue")) return 1;
-    if (path.startsWith("/about")) return 2;
+    if (path.startsWith("/profile")) return 2;
     // For any other pages like track info, don't highlight any tab
     // but still show the navigation
     return -1;
@@ -33,6 +37,28 @@ export function Navigator() {
       navigate(route);
     }
   };
+
+  // Set up swipe handlers for navigation between tabs
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => {
+      // When swiping left, go to the next tab (if not on the last tab)
+      if (activeTab >= 0 && activeTab < routes.length - 1) {
+        const nextTab = activeTab + 1;
+        navigate(routes[nextTab]);
+      }
+    },
+    onSwipedRight: () => {
+      // When swiping right, go to the previous tab (if not on the first tab)
+      if (activeTab > 0) {
+        const prevTab = activeTab - 1;
+        navigate(routes[prevTab]);
+      }
+    },
+    // Configure swipe sensitivity
+    trackMouse: false, // Only track touch events, not mouse
+    swipeDuration: 500, // Adjust swipe duration for sensitivity
+    preventScrollOnSwipe: false, // Allow scrolling within pages
+  });
 
   // Create tab items with both icon and text for better UX
   const renderTabItem = (
@@ -49,7 +75,7 @@ export function Navigator() {
   );
 
   return (
-    <div className="app-navigation">
+    <div className="app-navigation" {...swipeHandlers}>
       <Tabbar className="app-main-tabbar">
         <Tabbar.Item
           selected={activeTab === 0}
@@ -73,7 +99,7 @@ export function Navigator() {
         </Tabbar.Item>
         <Tabbar.Item
           selected={activeTab === 2}
-          onClick={() => handleNavigate("/about", 2)}
+          onClick={() => handleNavigate("/profile", 2)}
         >
           {renderTabItem(
             <Icon28UserOutline width={24} height={24} />,

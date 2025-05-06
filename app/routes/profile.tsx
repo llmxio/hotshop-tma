@@ -1,5 +1,5 @@
-import type { Route } from "./+types/about";
-import { About } from "@/pages/About"; // Updated import
+import type { Route } from "./+types/profile";
+import { Profile } from "@/pages/Profile";
 import {
   retrieveLaunchParams,
   useLaunchParams,
@@ -7,8 +7,8 @@ import {
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "About - Hot Shop Radio" },
-    { name: "description", content: "About Hot Shop Radio" },
+    { title: "Profile - Hot Shop Radio" },
+    { name: "description", content: "Profile - Hot Shop Radio" },
   ];
 }
 
@@ -29,10 +29,10 @@ export async function clientLoader({
 
     return { ...launchParams, ...serverParams };
   } catch (error) {
-    console.error("about", error);
+    console.error("profile", error);
   }
 }
 
-export default function AboutRoute({ loaderData }: Route.ComponentProps) {
-  return <About />;
+export default function ProfileRoute({ loaderData }: Route.ComponentProps) {
+  return <Profile />;
 }

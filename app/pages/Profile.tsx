@@ -1,7 +1,6 @@
-import React from "react";
 import { Section, List, Cell } from "@telegram-apps/telegram-ui";
 
-export function About() {
+export function Profile() {
   return (
     <>
       <Section header="About">

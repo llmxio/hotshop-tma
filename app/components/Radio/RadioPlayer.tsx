@@ -13,7 +13,7 @@ const defaultStation = {
   artwork: "https://balrock.ru/images/icecastlogo.jpg",
 };
 
-interface GlobalRadioPlayerProps {
+interface RadioPlayerProps {
   mini?: boolean;
 }
 
@@ -21,9 +21,7 @@ interface GlobalRadioPlayerProps {
  * A persistent radio player component that appears across all pages
  * Shows current song info and provides playback controls
  */
-export const GlobalRadioPlayer: React.FC<GlobalRadioPlayerProps> = ({
-  mini = false,
-}) => {
+export const RadioPlayer: React.FC<RadioPlayerProps> = ({ mini = false }) => {
   const { play, playing, currentStation, stop, currentSong } = useRadioPlayer();
 
   const stationName = currentStation.title || defaultStation.name;
@@ -111,4 +109,4 @@ export const GlobalRadioPlayer: React.FC<GlobalRadioPlayerProps> = ({
   );
 };
 
-export default GlobalRadioPlayer;
+export default RadioPlayer;

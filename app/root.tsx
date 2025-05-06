@@ -19,14 +19,13 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import { NotFound } from "@/pages/NotFound";
 import type { Route } from "./+types/root";
 import "./app.css";
-import { RadioPlayerProvider } from "./components/Radio/RadioPlayerContext";
-import { GlobalRadioPlayer } from "./components/Radio";
 import { Navigator } from "./components/Navigator";
+import { RadioPlayer, RadioPlayerProvider } from "./components/Radio";
 import { main } from "./main";
 import { mockEnv } from "./mock";
-import { NotFound } from "@/pages/NotFound";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -96,7 +95,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <TonConnectUIProvider {...tonConnectOptions}>
           <RadioPlayerProvider>
             <AppRoot appearance={isDark ? "dark" : "light"} platform="base">
-              <GlobalRadioPlayer mini />
+              <RadioPlayer mini />
               {/* <div className="app-content">{children}</div> */}
               {children}
               <Navigator />

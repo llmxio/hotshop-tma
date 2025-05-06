@@ -6,12 +6,10 @@ import {
 } from "@react-router/dev/routes";
 
 export default [
-  layout("layouts/RootNoBack.tsx", [index("routes/index.tsx")]),
+  layout("layouts/RootNoBack.tsx", [index("routes/radio.tsx")]),
 
   layout("layouts/RootWithBack.tsx", [
-    route("home", "routes/home.tsx"),
-    route("radio", "routes/radio.tsx"),
-    route("about", "routes/about.tsx"),
+    route("profile", "routes/profile.tsx"),
     route("queue", "routes/queue.tsx"),
     route("track/:trackArtist/:trackTitle", "routes/track.tsx"),
     // Catch-all route for 404

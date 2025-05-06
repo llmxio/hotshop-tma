@@ -1,19 +1,24 @@
-import { RadioCurrentArtist } from "@/components/Radio/RadioCurrentArtist";
-import { RadioCurrentAlbum } from "@/components/Radio/RadioCurrentAlbum";
-import { RadioCurrentStation } from "@/components/Radio/RadioCurrentStation";
+import React from "react";
+import { RadioCurrentArtist, RadioCurrentAlbum } from "@/components/Radio";
+import { RadioTrackHistory } from "@/components/Radio";
+import type { Track } from "@/services/RadioHeartService";
+import { RadioListenerCount } from "@/components/Radio/RadioListenerCount";
+import { Section } from "@telegram-apps/telegram-ui";
 
-export function Radio() {
+interface RadioProps {
+  recentTracks?: Track[];
+}
+
+// The Radio page displays the Radio content since navigation is handled globally
+export function Radio({ recentTracks = [] }: RadioProps) {
+  // Create radio content without RadioCurrentStation (now handled by GlobalRadioPlayer)
   return (
     <>
-      <RadioCurrentStation />
       <RadioCurrentArtist />
       <RadioCurrentAlbum />
-      {/* <Section header="Station Info">
+      <Section header="Station Info">
         <RadioListenerCount />
-      </Section> */}
-      {/* <RadioTrackQueue /> */}
-      {/* <RadioTrackHistory /> */}
-      {/* The RadioGlobalFooter will appear automatically when the station is playing */}
+      </Section>
     </>
   );
 }

@@ -23,7 +23,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { RadioPlayerProvider } from "./components/Radio/RadioPlayerContext";
 import { GlobalRadioPlayer } from "./components/Radio";
-import { AppNavigation } from "./components/AppNavigation";
+import { Navigator } from "./components/Navigator";
 import { main } from "./main";
 import { mockEnv } from "./mock";
 import { NotFound } from "@/pages/NotFound";
@@ -99,7 +99,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <div className="app-container">
                 <GlobalRadioPlayer mini />
                 <div className="app-content">{children}</div>
-                <AppNavigation />
+                <Navigator />
               </div>
             </AppRoot>
           </RadioPlayerProvider>

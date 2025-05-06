@@ -1,5 +1,5 @@
 import React from "react";
-import { Cell, Button, Avatar } from "@telegram-apps/telegram-ui";
+import { Cell, Button, Avatar, Divider } from "@telegram-apps/telegram-ui";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import { Link } from "@/components/Link";
 import { Icon24Play, Icon24Pause, Icon24Music } from "@vkontakte/icons";

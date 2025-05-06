@@ -46,7 +46,6 @@ export const Link: FC<LinkProps> = ({
       to={to}
       onClick={onClick}
       className={classNames(className, "link")}
-      data-oid="yqsxvps"
     />
   );
 };

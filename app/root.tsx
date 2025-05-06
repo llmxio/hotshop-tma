@@ -8,7 +8,7 @@ import {
   useSignal,
 } from "@telegram-apps/sdk-react";
 
-import { AppRoot } from "@telegram-apps/telegram-ui";
+import { AppRoot, Divider } from "@telegram-apps/telegram-ui";
 
 import {
   isRouteErrorResponse,
@@ -96,6 +96,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <RadioPlayerProvider>
             <AppRoot appearance={isDark ? "dark" : "light"} platform="base">
               <RadioPlayer mini />
+              <Divider />
+
               {children}
               <Navigator />
             </AppRoot>

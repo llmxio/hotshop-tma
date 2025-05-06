@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabbar } from "@telegram-apps/telegram-ui";
+import { Tabbar, Section } from "@telegram-apps/telegram-ui";
 import { useLocation, useNavigate } from "react-router";
 import {
   Icon28MusicOutline,
@@ -49,7 +49,7 @@ export function AppNavigation() {
   );
 
   return (
-    <div className="app-navigation">
+    <Section className="app-navigation">
       <Tabbar className="app-main-tabbar">
         <Tabbar.Item
           selected={activeTab === 0}
@@ -82,6 +82,6 @@ export function AppNavigation() {
           )}
         </Tabbar.Item>
       </Tabbar>
-    </div>
+    </Section>
   );
 }

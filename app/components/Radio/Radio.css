@@ -115,3 +115,27 @@
 .has-radio-player {
   padding-bottom: 72px;
 }
+
+/* Styles for fixed player when scrolling */
+.fixed-player {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: var(--tg-theme-bg-color, #ffffff);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.fixed-player .global-radio-player {
+  margin: 0;
+  padding: 6px 12px;
+}
+
+/* Add padding to content when fixed player is visible */
+.fixed-player-active .app-content {
+  padding-top: 60px;
+}

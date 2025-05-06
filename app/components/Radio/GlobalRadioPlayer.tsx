@@ -1,5 +1,11 @@
 import React from "react";
-import { Cell, Button, Avatar } from "@telegram-apps/telegram-ui";
+import {
+  Cell,
+  Button,
+  Avatar,
+  FixedLayout,
+  Section,
+} from "@telegram-apps/telegram-ui";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import { Link } from "@/components/Link";
 import { FaPlay, FaStop, FaMusic } from "react-icons/fa";
@@ -47,24 +53,32 @@ export const GlobalRadioPlayer: React.FC<GlobalRadioPlayerProps> = ({
   // If not playing and in mini mode, show a more compact player
   if (mini && !isStationPlaying) {
     return (
-      <Cell
-        className="global-radio-player mini"
-        before={<FaMusic />}
-        after={
-          <Button size="s" onClick={handlePlay} before={<FaPlay size={14} />}>
-            Play Radio
-          </Button>
-        }
-      >
-        {stationName}
-      </Cell>
+      <>
+        <FixedLayout vertical="top">
+          <Cell
+            before={<FaMusic />}
+            after={
+              <Button
+                size="s"
+                onClick={handlePlay}
+                before={<FaPlay size={14} />}
+              >
+                Play Radio
+              </Button>
+            }
+          >
+            {stationName}
+          </Cell>
+        </FixedLayout>
+        {/* Add spacer section to prevent content overlap */}
+        <Section style={{ height: "56px", padding: 0 }} />
+      </>
     );
   }
 
   // Regular mode or playing in mini mode
   const cellContent = (
     <Cell
-      className={`global-radio-player ${mini ? "mini" : ""}`}
       subtitle={
         isStationPlaying && currentSong.artist
           ? currentSong.artist
@@ -97,13 +111,20 @@ export const GlobalRadioPlayer: React.FC<GlobalRadioPlayerProps> = ({
   );
 
   // If we have track info and it's playing, make the cell a link to the track page
-  return trackUrl &&
-    isStationPlaying &&
-    currentSong.artist &&
-    currentSong.title ? (
-    <Link to={trackUrl}>{cellContent}</Link>
-  ) : (
-    cellContent
+  const playerContent =
+    trackUrl && isStationPlaying && currentSong.artist && currentSong.title ? (
+      <Link to={trackUrl}>{cellContent}</Link>
+    ) : (
+      cellContent
+    );
+
+  // Return both the fixed header and spacer to prevent content overlap
+  return (
+    <>
+      <FixedLayout vertical="top">{playerContent}</FixedLayout>
+      {/* Add spacer section that matches height of the player */}
+      <Section style={{ height: mini ? "56px" : "64px", padding: 0 }} />
+    </>
   );
 };
 

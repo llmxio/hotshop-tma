@@ -1,5 +1,5 @@
-import type { Route } from "./+types/history"; // Assuming types will be moved or this is a conventional path
-import { History } from "@/pages/History";
+import type { Route } from "./+types/playlist";
+import { Playlist } from "@/pages/Playlist";
 import {
   retrieveLaunchParams,
   useLaunchParams,
@@ -8,8 +8,8 @@ import { radioHeartService } from "@/services/RadioHeartService";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "History - Hot Shop Radio" },
-    { name: "description", content: "Track history for Hot Shop Radio" },
+    { title: "Playlist - Hot Shop Radio" },
+    { name: "description", content: "Track playlist for Hot Shop Radio" },
   ];
 }
 
@@ -31,12 +31,8 @@ export async function loader({ context }: Route.LoaderArgs) {
   }
 }
 
-export async function clientLoader({
-  request,
-  serverLoader,
-}: Route.ClientLoaderArgs) {
+export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
   try {
-    // Get data from the server loader which now includes recentTracks
     const serverParams = await serverLoader();
     const launchParams = retrieveLaunchParams();
 
@@ -52,6 +48,8 @@ export async function clientLoader({
   }
 }
 
-export default function HistoryRoute({ loaderData }: Route.ComponentProps) {
-  return <History recentTracks={loaderData?.recentTracks} />;
+export default function PlaylistRoute({ loaderData }: Route.ComponentProps) {
+  console.log("PlaylistRoute", loaderData);
+
+  return <Playlist recentTracks={loaderData?.recentTracks} />;
 }

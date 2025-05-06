@@ -23,7 +23,7 @@ export function Navigator() {
   const getActiveTab = () => {
     const path = location.pathname;
     if (path === "/" || path.startsWith("/radio")) return 0;
-    if (path.startsWith("/queue")) return 1;
+    if (path.startsWith("/playlist")) return 1;
     if (path.startsWith("/profile")) return 2;
     // For any other pages like track info, don't highlight any tab
     // but still show the navigation
@@ -67,7 +67,7 @@ export function Navigator() {
       </Tabbar.Item>
       <Tabbar.Item
         selected={activeTab === 1}
-        onClick={() => handleNavigate("/queue", 1)}
+        onClick={() => handleNavigate("/playlist", 1)}
       >
         {renderTabItem(
           <Icon28ListOutline width={28} height={28} />,

@@ -1,11 +1,10 @@
-import React from "react";
 import { RadioPlaylist } from "@/components/Radio";
 
-interface HistoryProps {
+interface PlaylistProps {
   recentTracks?: any[];
 }
 
-export function History({ recentTracks }: HistoryProps) {
+export function Playlist({ recentTracks }: PlaylistProps) {
   return (
     <>
       <RadioPlaylist initialTracks={recentTracks} />

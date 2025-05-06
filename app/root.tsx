@@ -96,11 +96,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <TonConnectUIProvider {...tonConnectOptions}>
           <RadioPlayerProvider>
             <AppRoot appearance={isDark ? "dark" : "light"} platform="base">
-              <div className="app-container">
-                <GlobalRadioPlayer mini />
-                <div className="app-content">{children}</div>
-                <Navigator />
-              </div>
+              <GlobalRadioPlayer mini />
+              {/* <div className="app-content">{children}</div> */}
+              {children}
+              <Navigator />
             </AppRoot>
           </RadioPlayerProvider>
         </TonConnectUIProvider>

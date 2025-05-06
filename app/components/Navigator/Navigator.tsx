@@ -44,7 +44,7 @@ export function Navigator() {
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       {icon}
-      <span style={{ fontSize: "12px", marginTop: "2px" }}>{text}</span>
+      <span style={{ fontSize: "12px", marginTop: "0px" }}>{text}</span>
     </div>
   );
 
@@ -56,7 +56,7 @@ export function Navigator() {
           onClick={() => handleNavigate("/", 0)}
         >
           {renderTabItem(
-            <Icon28MusicOutline width={24} height={24} />,
+            <Icon28MusicOutline width={28} height={28} />,
             "Radio",
             activeTab === 0
           )}
@@ -66,8 +66,8 @@ export function Navigator() {
           onClick={() => handleNavigate("/queue", 1)}
         >
           {renderTabItem(
-            <Icon28ListOutline width={24} height={24} />,
-            "History",
+            <Icon28ListOutline width={28} height={28} />,
+            "Playlist",
             activeTab === 1
           )}
         </Tabbar.Item>
@@ -77,7 +77,7 @@ export function Navigator() {
         >
           {renderTabItem(
             <Icon28UserOutline width={24} height={24} />,
-            "About",
+            "Profile",
             activeTab === 2
           )}
         </Tabbar.Item>

@@ -2,7 +2,7 @@ import React from "react";
 import { Cell, Button, Avatar } from "@telegram-apps/telegram-ui";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import { Link } from "@/components/Link";
-import { FaPlay, FaStop, FaMusic } from "react-icons/fa";
+import { Icon24Play, Icon24Pause, Icon24Music } from "@vkontakte/icons";
 
 // Default station information for fallback
 const defaultStation = {
@@ -49,9 +49,9 @@ export const GlobalRadioPlayer: React.FC<GlobalRadioPlayerProps> = ({
     return (
       <Cell
         className="global-radio-player mini"
-        before={<FaMusic />}
+        before={<Icon24Music />}
         after={
-          <Button size="s" onClick={handlePlay} before={<FaPlay size={14} />}>
+          <Button size="s" onClick={handlePlay} before={<Icon24Play />}>
             Play Radio
           </Button>
         }
@@ -85,7 +85,11 @@ export const GlobalRadioPlayer: React.FC<GlobalRadioPlayerProps> = ({
             isStationPlaying ? stop() : handlePlay();
           }}
           before={
-            isStationPlaying ? <FaStop size={14} /> : <FaPlay size={14} />
+            isStationPlaying ? (
+              <Icon24Pause />
+            ) : (
+              <Icon24Play width={14} height={14} />
+            )
           }
         >
           {isStationPlaying ? "Stop" : "Play"}

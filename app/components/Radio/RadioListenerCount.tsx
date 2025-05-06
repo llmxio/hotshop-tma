@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Cell, Info } from "@telegram-apps/telegram-ui";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import { radioHeartService } from "@/services/RadioHeartService";
-import { FaUsers } from "react-icons/fa";
+import { Icon24Users } from "@vkontakte/icons";
 
 interface RadioListenerCountProps {
   refreshInterval?: number; // in milliseconds
@@ -43,7 +43,7 @@ export const RadioListenerCount: React.FC<RadioListenerCountProps> = ({
 
   return (
     <Cell
-      before={<FaUsers />}
+      before={<Icon24Users />}
       after={
         error ? (
           <Info type="text">Error</Info>

@@ -4,22 +4,6 @@ body {
   margin: 0;
 }
 
-/* App container and content layout */
-.app-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  position: relative;
-}
-
-.app-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 60px; /* Leave space for the tabbar */
-  overflow-y: auto;
-}
-
 /* Global Radio Player styles */
 .global-radio-player {
   border-bottom: 1px solid var(--tg-theme-secondary-bg-color, #f0f0f0);

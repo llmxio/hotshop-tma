@@ -46,7 +46,7 @@ export const RadioPlayer: React.FC<RadioPlayerProps> = ({ mini = false }) => {
   if (mini && !isStationPlaying) {
     return (
       <Cell
-        className="global-radio-player mini"
+        className="radio-player mini"
         before={<Icon24Music />}
         after={
           <Button size="s" onClick={handlePlay} before={<Icon24Play />}>
@@ -62,7 +62,7 @@ export const RadioPlayer: React.FC<RadioPlayerProps> = ({ mini = false }) => {
   // Regular mode or playing in mini mode
   const cellContent = (
     <Cell
-      className={`global-radio-player ${mini ? "mini" : ""}`}
+      className={`radio-player ${mini ? "mini" : ""}`}
       subtitle={
         isStationPlaying && currentSong.artist
           ? currentSong.artist

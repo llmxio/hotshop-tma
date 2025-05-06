@@ -5,41 +5,13 @@ body {
 }
 
 /* Global Radio Player styles */
-.global-radio-player {
-  border-bottom: 1px solid var(--tg-theme-secondary-bg-color, #f0f0f0);
+.radio-player {
+  /* border-bottom: 1px solid var(--tg-theme-secondary-bg-color, #f0f0f0); */
   background-color: var(--tg-theme-bg-color, white);
   position: relative;
   z-index: 10;
 }
 
-.global-radio-player.mini {
+.radio-player.mini {
   padding: 8px 16px;
-}
-
-/* Switcher component styles */
-.switcher-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.switcher-content {
-  flex: 1;
-  overflow-y: auto;
-  padding-bottom: 60px; /* Leave space for the tabbar */
-}
-
-/* App Navigation styles */
-.app-navigation {
-  width: 100%;
-}
-
-.app-main-tabbar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  background-color: var(--tg-theme-bg-color, white);
-  border-top: 1px solid var(--tg-theme-hint-color, #e0e0e0);
 }

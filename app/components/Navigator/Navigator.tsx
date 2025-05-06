@@ -41,6 +41,7 @@ export function Navigator() {
   // Set up swipe handlers for navigation between tabs
   const swipeHandlers = useSwipeable({
     onSwipedLeft: () => {
+      console.log("Swiped left");
       // When swiping left, go to the next tab (if not on the last tab)
       if (activeTab >= 0 && activeTab < routes.length - 1) {
         const nextTab = activeTab + 1;
@@ -48,6 +49,7 @@ export function Navigator() {
       }
     },
     onSwipedRight: () => {
+      console.log("Swiped right");
       // When swiping right, go to the previous tab (if not on the first tab)
       if (activeTab > 0) {
         const prevTab = activeTab - 1;
@@ -55,8 +57,8 @@ export function Navigator() {
       }
     },
     // Configure swipe sensitivity
-    trackMouse: false, // Only track touch events, not mouse
-    swipeDuration: 500, // Adjust swipe duration for sensitivity
+    trackMouse: true, // Only track touch events, not mouse
+    swipeDuration: 70, // Adjust swipe duration for sensitivity
     preventScrollOnSwipe: false, // Allow scrolling within pages
   });
 
@@ -75,39 +77,39 @@ export function Navigator() {
   );
 
   return (
-    <div className="app-navigation" {...swipeHandlers}>
-      <Tabbar className="app-main-tabbar">
-        <Tabbar.Item
-          selected={activeTab === 0}
-          onClick={() => handleNavigate("/", 0)}
-        >
-          {renderTabItem(
-            <Icon28MusicOutline width={28} height={28} />,
-            "Radio",
-            activeTab === 0
-          )}
-        </Tabbar.Item>
-        <Tabbar.Item
-          selected={activeTab === 1}
-          onClick={() => handleNavigate("/queue", 1)}
-        >
-          {renderTabItem(
-            <Icon28ListOutline width={28} height={28} />,
-            "Playlist",
-            activeTab === 1
-          )}
-        </Tabbar.Item>
-        <Tabbar.Item
-          selected={activeTab === 2}
-          onClick={() => handleNavigate("/profile", 2)}
-        >
-          {renderTabItem(
-            <Icon28UserOutline width={24} height={24} />,
-            "Profile",
-            activeTab === 2
-          )}
-        </Tabbar.Item>
-      </Tabbar>
-    </div>
+    // <div className="app-navigation">
+    <Tabbar {...swipeHandlers}>
+      <Tabbar.Item
+        selected={activeTab === 0}
+        onClick={() => handleNavigate("/", 0)}
+      >
+        {renderTabItem(
+          <Icon28MusicOutline width={28} height={28} />,
+          "Radio",
+          activeTab === 0
+        )}
+      </Tabbar.Item>
+      <Tabbar.Item
+        selected={activeTab === 1}
+        onClick={() => handleNavigate("/queue", 1)}
+      >
+        {renderTabItem(
+          <Icon28ListOutline width={28} height={28} />,
+          "Playlist",
+          activeTab === 1
+        )}
+      </Tabbar.Item>
+      <Tabbar.Item
+        selected={activeTab === 2}
+        onClick={() => handleNavigate("/profile", 2)}
+      >
+        {renderTabItem(
+          <Icon28UserOutline width={24} height={24} />,
+          "Profile",
+          activeTab === 2
+        )}
+      </Tabbar.Item>
+    </Tabbar>
+    // </div>
   );
 }

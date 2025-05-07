@@ -2,7 +2,7 @@ import React from "react";
 import { Cell, Button, Avatar, Divider } from "@telegram-apps/telegram-ui";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import { Link } from "@/components/Link";
-import { Icon24Play, Icon24Pause, Icon24Music } from "@vkontakte/icons";
+import { Icon24Play, Icon24Stop, Icon24Music } from "@vkontakte/icons";
 
 // Default station information for fallback
 const defaultStation = {
@@ -84,7 +84,7 @@ export const RadioPlayer: React.FC<RadioPlayerProps> = ({ mini = false }) => {
           }}
           before={
             isStationPlaying ? (
-              <Icon24Pause />
+              <Icon24Stop />
             ) : (
               <Icon24Play width={14} height={14} />
             )

@@ -5,9 +5,5 @@ interface PlaylistProps {
 }
 
 export function Playlist({ recentTracks }: PlaylistProps) {
-  return (
-    <>
-      <RadioPlaylist initialTracks={recentTracks} />
-    </>
-  );
+  return <RadioPlaylist initialTracks={recentTracks} />;
 }

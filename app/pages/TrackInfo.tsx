@@ -7,7 +7,7 @@ import {
 } from "@telegram-apps/telegram-ui";
 import { radioHeartService } from "@/services/RadioHeartService";
 import { musicBrainzService } from "@/services/MusicBrainzService";
-import { useParams } from "react-router";
+import { useParams, useLoaderData } from "react-router";
 
 // Define param types for useParams
 type TrackInfoParams = {

@@ -53,14 +53,13 @@ export function Navigator() {
   );
 
   return (
-    // <div className="app-navigation">
     <Tabbar>
       <Tabbar.Item
         selected={activeTab === 0}
         onClick={() => handleNavigate("/", 0)}
       >
         {renderTabItem(
-          <Icon28MusicOutline width={28} height={28} />,
+          <Icon28MusicOutline width={24} height={24} />,
           "Radio",
           activeTab === 0
         )}
@@ -70,7 +69,7 @@ export function Navigator() {
         onClick={() => handleNavigate("/playlist", 1)}
       >
         {renderTabItem(
-          <Icon28ListOutline width={28} height={28} />,
+          <Icon28ListOutline width={24} height={24} />,
           "Playlist",
           activeTab === 1
         )}
@@ -86,6 +85,5 @@ export function Navigator() {
         )}
       </Tabbar.Item>
     </Tabbar>
-    // </div>
   );
 }

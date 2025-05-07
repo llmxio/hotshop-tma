@@ -60,14 +60,21 @@ export const RadioTrackInfo: React.FC<RadioTrackInfoProps> = ({
   )}`;
 
   const cellContent = dense ? (
-    <Cell before={<Avatar size={40} src={artistImage} />} after={time}>
+    <Cell
+      before={
+        <Avatar size={40} src={artistImage} style={{ borderRadius: 4 }} />
+      }
+      after={time}
+    >
       {`${artist} - ${title}`}
     </Cell>
   ) : (
     <Cell
       subtitle={artist}
-      before={<Avatar size={48} src={artistImage} />}
-      after={time ? <Info type="text">{time}</Info> : undefined}
+      before={
+        <Avatar size={48} src={artistImage} style={{ borderRadius: 4 }} />
+      }
+      after={time ? <Info type="text" subtitle={time} /> : undefined}
     >
       {title}
     </Cell>

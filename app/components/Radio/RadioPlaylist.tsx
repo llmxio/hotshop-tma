@@ -3,6 +3,7 @@ import { Section, List, Button, Spinner } from "@telegram-apps/telegram-ui";
 import { RadioTrackInfo } from "./RadioTrackInfo";
 import { radioHeartService } from "@/services/RadioHeartService";
 import type { Track } from "@/services/RadioHeartService";
+import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 
 interface RadioPlaylistProps {
   initialTracks?: Track[];
@@ -11,30 +12,32 @@ interface RadioPlaylistProps {
 export const RadioPlaylist: React.FC<RadioPlaylistProps> = ({
   initialTracks = [],
 }) => {
+  const { playing } = useRadioPlayer();
+
   const [tracks, setTracks] = useState<Track[]>(initialTracks);
   const [loading, setLoading] = useState(initialTracks.length === 0);
   const [error, setError] = useState<string | null>(null);
+
+  const fetchRecentTracks = async () => {
+    try {
+      setLoading(true);
+      const upcomingTracks = await radioHeartService.getUpcomingTracks(1);
+      const recentTracks = await radioHeartService.getRecentTracks(9);
+      setTracks([...upcomingTracks, ...recentTracks]);
+    } catch (err) {
+      console.error("Error fetching track history:", err);
+      setError(
+        err instanceof Error ? err.message : "Failed to load track history"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (initialTracks.length > 0) {
       return; // Skip fetching if we have initial tracks
     }
-
-    const fetchRecentTracks = async () => {
-      try {
-        setLoading(true);
-        const upcomingTracks = await radioHeartService.getUpcomingTracks(1);
-        const recentTracks = await radioHeartService.getRecentTracks(9);
-        setTracks(recentTracks);
-      } catch (err) {
-        console.error("Error fetching track history:", err);
-        setError(
-          err instanceof Error ? err.message : "Failed to load track history"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
 
     fetchRecentTracks();
   }, [initialTracks]);
@@ -68,7 +71,7 @@ export const RadioPlaylist: React.FC<RadioPlaylistProps> = ({
             <RadioTrackInfo
               key={index}
               name={track.name}
-              index={index}
+              index={index + 1}
               time={track.time}
             />
           ))}

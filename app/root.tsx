@@ -8,7 +8,7 @@ import {
   useSignal,
 } from "@telegram-apps/sdk-react";
 
-import { AppRoot, Divider } from "@telegram-apps/telegram-ui";
+import { AppRoot } from "@telegram-apps/telegram-ui";
 
 import {
   isRouteErrorResponse,

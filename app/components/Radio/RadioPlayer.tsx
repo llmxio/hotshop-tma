@@ -67,7 +67,7 @@ export const RadioPlayer: React.FC<RadioPlayerProps> = ({ mini = false }) => {
   }
 
   // Regular mode or playing in mini mode
-  const cellContent = (
+  return (
     <Cell
       className={`radio-player ${mini ? "mini" : ""}`}
       subtitle={
@@ -101,18 +101,14 @@ export const RadioPlayer: React.FC<RadioPlayerProps> = ({ mini = false }) => {
         </Button>
       }
     >
-      {isStationPlaying && currentSong.title ? currentSong.title : stationName}
+      {isStationPlaying && currentSong.title && trackUrl ? (
+        <>
+          <Link to={trackUrl}>{currentSong.title}</Link>
+        </>
+      ) : (
+        stationName
+      )}
     </Cell>
-  );
-
-  // If we have track info and it's playing, make the cell a link to the track page
-  return trackUrl &&
-    isStationPlaying &&
-    currentSong.artist &&
-    currentSong.title ? (
-    <Link to={trackUrl}>{cellContent}</Link>
-  ) : (
-    cellContent
   );
 };
 

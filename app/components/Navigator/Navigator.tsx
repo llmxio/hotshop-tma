@@ -6,8 +6,11 @@ import {
   Icon28MusicOutline,
   Icon28ListOutline,
   Icon28UserOutline,
+  Icon28CupOutline,
+  Icon28UsersOutline,
 } from "@vkontakte/icons";
 import { useTonWallet } from "@tonconnect/ui-react";
+import { getActiveTab, getTabRoute } from "./sharedNavigation";
 
 /**
  * Main application navigation component that displays a persistent bottom tab bar
@@ -16,24 +19,9 @@ import { useTonWallet } from "@tonconnect/ui-react";
 export function Navigator() {
   const location = useLocation();
   const navigate = useNavigate();
-
   const wallet = useTonWallet();
 
-  // Define all available routes for navigation
-  // const routes = ["/", "/queue", "/profile"];
-
-  // Determine which tab should be active based on the current path
-  const getActiveTab = () => {
-    const path = location.pathname;
-    if (path === "/" || path.startsWith("/radio")) return 0;
-    if (path.startsWith("/playlist")) return 1;
-    if (path.startsWith("/profile")) return 2;
-    // For any other pages like track info, don't highlight any tab
-    // but still show the navigation
-    return -1;
-  };
-
-  const activeTab = getActiveTab();
+  const activeTab = getActiveTab(location.pathname);
 
   const handleNavigate = (route: string, index: number) => {
     if (activeTab !== index) {
@@ -46,21 +34,35 @@ export function Navigator() {
       <Tabbar.Item
         text="Radio"
         selected={activeTab === 0}
-        onClick={() => handleNavigate("/", 0)}
+        onClick={() => handleNavigate(getTabRoute(0), 0)}
       >
         <Icon28MusicOutline />
       </Tabbar.Item>
       <Tabbar.Item
         text="Queue"
         selected={activeTab === 1}
-        onClick={() => handleNavigate("/playlist", 1)}
+        onClick={() => handleNavigate(getTabRoute(1), 1)}
       >
         <Icon28ListOutline />
       </Tabbar.Item>
       <Tabbar.Item
-        text={wallet ? "Me" : "Login"}
+        text="Charts"
         selected={activeTab === 2}
-        onClick={() => handleNavigate("/profile", 2)}
+        onClick={() => handleNavigate(getTabRoute(2), 2)}
+      >
+        <Icon28CupOutline />
+      </Tabbar.Item>
+      <Tabbar.Item
+        text="Bands"
+        selected={activeTab === 3}
+        onClick={() => handleNavigate(getTabRoute(3), 3)}
+      >
+        <Icon28UsersOutline />
+      </Tabbar.Item>
+      <Tabbar.Item
+        text={wallet ? "Profile" : "Connect"}
+        selected={activeTab === 4}
+        onClick={() => handleNavigate(getTabRoute(4), 4)}
       >
         <Icon28UserOutline />
       </Tabbar.Item>

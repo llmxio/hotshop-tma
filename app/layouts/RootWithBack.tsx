@@ -11,9 +11,7 @@ export default function RootWithBack() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isBackButtonMounted()) return;
-
-    if (showBackButton.isAvailable()) {
+    if (isBackButtonMounted() && showBackButton.isAvailable()) {
       showBackButton();
     }
 

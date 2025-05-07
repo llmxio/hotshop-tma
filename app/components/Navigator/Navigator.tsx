@@ -7,6 +7,7 @@ import {
   Icon28ListOutline,
   Icon28UserOutline,
 } from "@vkontakte/icons";
+import { useTonWallet } from "@tonconnect/ui-react";
 
 /**
  * Main application navigation component that displays a persistent bottom tab bar
@@ -15,6 +16,8 @@ import {
 export function Navigator() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const wallet = useTonWallet();
 
   // Define all available routes for navigation
   // const routes = ["/", "/queue", "/profile"];
@@ -41,18 +44,21 @@ export function Navigator() {
   return (
     <Tabbar>
       <Tabbar.Item
+        text="Radio"
         selected={activeTab === 0}
         onClick={() => handleNavigate("/", 0)}
       >
         <Icon28MusicOutline />
       </Tabbar.Item>
       <Tabbar.Item
+        text="Queue"
         selected={activeTab === 1}
         onClick={() => handleNavigate("/playlist", 1)}
       >
         <Icon28ListOutline />
       </Tabbar.Item>
       <Tabbar.Item
+        text={wallet ? "Me" : "Login"}
         selected={activeTab === 2}
         onClick={() => handleNavigate("/profile", 2)}
       >

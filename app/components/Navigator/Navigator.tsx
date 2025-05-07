@@ -38,51 +38,25 @@ export function Navigator() {
     }
   };
 
-  // Create tab items with both icon and text for better UX
-  const renderTabItem = (
-    icon: React.ReactNode,
-    text: string,
-    isActive: boolean
-  ) => (
-    <div
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
-      {icon}
-      <span style={{ fontSize: "12px", marginTop: "0px" }}>{text}</span>
-    </div>
-  );
-
   return (
     <Tabbar>
       <Tabbar.Item
         selected={activeTab === 0}
         onClick={() => handleNavigate("/", 0)}
       >
-        {renderTabItem(
-          <Icon28MusicOutline width={24} height={24} />,
-          "Radio",
-          activeTab === 0
-        )}
+        <Icon28MusicOutline />
       </Tabbar.Item>
       <Tabbar.Item
         selected={activeTab === 1}
         onClick={() => handleNavigate("/playlist", 1)}
       >
-        {renderTabItem(
-          <Icon28ListOutline width={24} height={24} />,
-          "Playlist",
-          activeTab === 1
-        )}
+        <Icon28ListOutline />
       </Tabbar.Item>
       <Tabbar.Item
         selected={activeTab === 2}
         onClick={() => handleNavigate("/profile", 2)}
       >
-        {renderTabItem(
-          <Icon28UserOutline width={24} height={24} />,
-          "Profile",
-          activeTab === 2
-        )}
+        <Icon28UserOutline />
       </Tabbar.Item>
     </Tabbar>
   );

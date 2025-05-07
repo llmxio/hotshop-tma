@@ -1,9 +1,6 @@
 import type { Route } from "./+types/playlist";
 import { Playlist } from "@/pages/Playlist";
-import {
-  retrieveLaunchParams,
-  useLaunchParams,
-} from "@telegram-apps/sdk-react";
+import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 import { radioHeartService } from "@/services/RadioHeartService";
 
 export function meta({}: Route.MetaArgs) {
@@ -16,8 +13,7 @@ export function meta({}: Route.MetaArgs) {
 export async function loader({ context }: Route.LoaderArgs) {
   try {
     // Fetch recent tracks on the server side
-    const recentTracks = await radioHeartService.getRecentTracks(20);
-    const upcomingTracks = await radioHeartService.getUpcomingTracks(1);
+    const recentTracks = await radioHeartService.getRecentTracks(10);
 
     return {
       message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE,

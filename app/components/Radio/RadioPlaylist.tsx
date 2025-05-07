@@ -27,9 +27,8 @@ export const RadioPlaylist: React.FC<RadioPlaylistProps> = ({
   const fetchRecentTracks = async () => {
     try {
       setLoading(true);
-      const upcomingTracks = await radioHeartService.getUpcomingTracks(1);
-      const recentTracks = await radioHeartService.getRecentTracks(9);
-      setTracks([...upcomingTracks, ...recentTracks]);
+      const recentTracks = await radioHeartService.getRecentTracks(20);
+      setTracks(recentTracks);
     } catch (err) {
       console.error("Error fetching track history:", err);
       setError(
@@ -68,7 +67,7 @@ export const RadioPlaylist: React.FC<RadioPlaylistProps> = ({
   }
 
   return (
-    <Section header="Recently Played Tracks">
+    <Section>
       {tracks.length === 0 ? (
         <div className="empty-state">No recent tracks found</div>
       ) : (

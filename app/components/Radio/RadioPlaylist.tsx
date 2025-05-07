@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Section, List, Button, Spinner } from "@telegram-apps/telegram-ui";
+import {
+  Section,
+  List,
+  Button,
+  Spinner,
+  Divider,
+} from "@telegram-apps/telegram-ui";
 import { RadioTrackInfo } from "./RadioTrackInfo";
 import { radioHeartService } from "@/services/RadioHeartService";
 import type { Track } from "@/services/RadioHeartService";
@@ -68,12 +74,15 @@ export const RadioPlaylist: React.FC<RadioPlaylistProps> = ({
       ) : (
         <List>
           {tracks.map((track, index) => (
-            <RadioTrackInfo
-              key={index}
-              name={track.name}
-              index={index + 1}
-              time={track.time}
-            />
+            <>
+              <RadioTrackInfo
+                key={index}
+                name={track.name}
+                index={0}
+                time={track.time}
+              />
+              <Divider />
+            </>
           ))}
         </List>
       )}

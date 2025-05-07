@@ -14,9 +14,9 @@ export function Radio({ recentTracks = [] }: RadioProps) {
     <>
       <RadioCurrentArtist />
       <RadioCurrentAlbum />
-      <Section header="Station Info">
+      {/* <Section header="Station Info">
         <RadioListenerCount />
-      </Section>
+      </Section> */}
     </>
   );
 }

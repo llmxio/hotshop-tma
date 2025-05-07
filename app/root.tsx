@@ -96,8 +96,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <RadioPlayerProvider>
             <AppRoot appearance={isDark ? "dark" : "light"} platform="base">
               <RadioPlayer mini />
-              <Divider />
-
               {children}
               <Navigator />
             </AppRoot>

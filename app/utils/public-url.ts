@@ -9,6 +9,7 @@ export function publicUrl(path: string): string {
   // give us the expected result, it will actually be "/tonconnect-manifest.json", but the expected
   // one is "/my-base/tonconnect-manifest.json". This is due to the URL constructor.
   let baseUrl = import.meta.env.BASE_URL;
+
   if (!baseUrl.endsWith("/")) {
     baseUrl += "/";
   }
@@ -17,7 +18,7 @@ export function publicUrl(path: string): string {
 
   let isBaseAbsolute = false;
   try {
-    new URL(baseUrl);
+    new URL(baseUrl, window.location.toString());
     isBaseAbsolute = true;
   } catch {
     console.error("The base URL is not a valid URL");
@@ -32,7 +33,7 @@ export function publicUrl(path: string): string {
     // base URL. For instance, having the "/my-base/" base URL and path
     // equal to "/tonconnect-manifest.json", we will not get the expected result like
     // "/my-base/tonconnect-manifest.json", but "/tonconnect-manifest.json".
-    path.replace(/^\/+/, ""),
+    path,
     baseUrl
   ).toString();
 }

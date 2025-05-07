@@ -117,14 +117,12 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
       return;
     }
     let radioMounts = ["/studio", "/relay", "/nonstop"];
-    console.log("Fetching current song from:", jsonPath);
     fetch(jsonPath)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
       })
       .then((response: any) => {
-        console.log("Response:", response);
         let mounts = response.mounts;
         let directMount = mounts.find(
           (item: any) => !radioMounts.includes(item.mount)
@@ -145,10 +143,10 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
             const artist = getArtistFromTitle(fullTitle);
             const title = getSongFromTitle(fullTitle);
 
-            console.log("Current song:", { artist, title, fullTitle });
-
             // Check if the song changed before fetching new artwork
             if (artist !== currentSong.artist || title !== currentSong.title) {
+              console.log("Current song:", fullTitle);
+
               setCurrentSong({
                 artist,
                 title,

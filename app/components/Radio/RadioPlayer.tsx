@@ -3,6 +3,7 @@ import { Cell, Button, Avatar, Divider } from "@telegram-apps/telegram-ui";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import { Link } from "@/components/Link";
 import { Icon24Play, Icon24Stop, Icon24Music } from "@vkontakte/icons";
+import { publicUrl } from "@/utils/public-url";
 
 // Default station information for fallback
 const defaultStation = {
@@ -10,7 +11,7 @@ const defaultStation = {
   name: "Hot Shop",
   genre: "non-format music",
   src: "https://listen.myrh.ru/balrockru",
-  artwork: "https://balrock.ru/images/icecastlogo.jpg",
+  artwork: "/logobot.png",
 };
 
 interface RadioPlayerProps {

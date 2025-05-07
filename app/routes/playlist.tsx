@@ -17,10 +17,11 @@ export async function loader({ context }: Route.LoaderArgs) {
   try {
     // Fetch recent tracks on the server side
     const recentTracks = await radioHeartService.getRecentTracks(20);
+    const upcomingTracks = await radioHeartService.getUpcomingTracks(1);
 
     return {
       message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE,
-      recentTracks,
+      recentTracks: [...recentTracks],
     };
   } catch (error) {
     console.error("Server-side error fetching tracks:", error);

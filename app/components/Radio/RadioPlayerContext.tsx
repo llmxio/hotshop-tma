@@ -4,6 +4,7 @@ import {
   getLocation,
   getArtistFromTitle,
   getSongFromTitle,
+  radioHeartService,
 } from "@/services/RadioHeartService";
 
 export interface RadioPlayerProps {
@@ -19,6 +20,7 @@ export interface RadioPlayerProps {
     artist: string;
     title: string;
     fullTitle: string;
+    artwork?: string;
   };
   play: (src?: string, title?: string, artwork?: string) => void;
   stop: () => void;
@@ -46,6 +48,10 @@ const defaultContext: RadioPlayerProps = {
   toggleMute: () => {},
 };
 
+// Default fallback image when track artwork can't be loaded
+const DEFAULT_ARTWORK =
+  "https://billing.radioheart.ru/public_pages/assets/img/noimage.jpg";
+
 export const RadioPlayerContext = createContext(defaultContext);
 
 export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -64,7 +70,22 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
     artist: "",
     title: "",
     fullTitle: "",
+    artwork: "",
   });
+
+  // Fetch artwork for the current track
+  const fetchTrackArtwork = (artist: string, title: string) => {
+    if (!artist || !title) return;
+
+    radioHeartService.getArtistImage(
+      artist,
+      title,
+      currentStation.artwork || DEFAULT_ARTWORK,
+      (imageUrl: string) => {
+        setCurrentSong((prev) => ({ ...prev, artwork: imageUrl }));
+      }
+    );
+  };
 
   useEffect(() => {
     // Create audio element when component mounts
@@ -126,11 +147,21 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
 
             console.log("Current song:", { artist, title, fullTitle });
 
-            setCurrentSong({
-              artist,
-              title,
-              fullTitle,
-            });
+            // Check if the song changed before fetching new artwork
+            if (artist !== currentSong.artist || title !== currentSong.title) {
+              setCurrentSong({
+                artist,
+                title,
+                fullTitle,
+                artwork:
+                  currentSong.artwork ||
+                  currentStation.artwork ||
+                  DEFAULT_ARTWORK,
+              });
+
+              // Fetch track artwork when we have a new song
+              fetchTrackArtwork(artist, title);
+            }
 
             setCurrentStation((prev) => ({
               ...prev,
@@ -144,7 +175,12 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
         // Optionally handle error
         console.error("Failed to fetch current song:", err);
       });
-  }, [currentStation.src]);
+  }, [
+    currentStation.src,
+    currentSong.artist,
+    currentSong.title,
+    currentStation.artwork,
+  ]);
 
   // Poll for song updates when playing
   useEffect(() => {
@@ -169,6 +205,14 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
       setCurrentStation({
         src,
         title: title || "Radio Stream",
+        artwork: artwork || "",
+      });
+
+      // Reset current song when changing stations
+      setCurrentSong({
+        artist: "",
+        title: "",
+        fullTitle: "",
         artwork: artwork || "",
       });
     }
@@ -234,5 +278,3 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
     </RadioPlayerContext.Provider>
   );
 };
-
-// export { RadioPlayerContext, RadioPlayerProvider };

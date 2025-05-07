@@ -46,7 +46,7 @@ export function RadioCurrentArtist() {
     song: title,
     album: artistInfo.album,
     year: artistInfo.year,
-    artwork: artistInfo.artwork,
+    artwork: currentSong.artwork || artistInfo.artwork,
     bio: artistInfo.bio,
   };
 
@@ -64,7 +64,7 @@ export function RadioCurrentArtist() {
         before={
           <Avatar
             size={48}
-            src={artistInfo.artwork}
+            src={currentSong.artwork || artistInfo.artwork}
             style={{ borderRadius: 4 }}
           />
         }

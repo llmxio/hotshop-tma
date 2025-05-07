@@ -28,11 +28,17 @@ export const RadioPlayer: React.FC<RadioPlayerProps> = ({ mini = false }) => {
   const stationSrc = currentStation.src || defaultStation.src;
   const stationArtwork = currentStation.artwork || defaultStation.artwork;
 
+  const isStationPlaying = playing && currentStation.src === stationSrc;
+
+  // Use track artwork when available, fall back to station artwork
+  const displayArtwork =
+    isStationPlaying && currentSong.artwork
+      ? currentSong.artwork
+      : stationArtwork;
+
   const handlePlay = () => {
     play(stationSrc, stationName, stationArtwork);
   };
-
-  const isStationPlaying = playing && currentStation.src === stationSrc;
 
   // Create track URL for navigation
   const trackUrl =
@@ -71,7 +77,7 @@ export const RadioPlayer: React.FC<RadioPlayerProps> = ({ mini = false }) => {
       before={
         <Avatar
           size={mini ? 40 : 48}
-          src={stationArtwork}
+          src={displayArtwork}
           style={{ borderRadius: 4 }}
         />
       }

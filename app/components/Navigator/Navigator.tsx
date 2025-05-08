@@ -1,15 +1,15 @@
-import React from "react";
 import { Tabbar } from "@telegram-apps/telegram-ui";
 
-import { useLocation, useNavigate } from "react-router";
+import { useTonWallet } from "@tonconnect/ui-react";
 import {
-  Icon28MusicOutline,
   Icon28ListOutline,
+  Icon28MusicOutline,
   Icon28UserOutline,
-  Icon28CupOutline,
   Icon28UsersOutline,
 } from "@vkontakte/icons";
-import { useTonWallet } from "@tonconnect/ui-react";
+
+import { useLocation, useNavigate } from "react-router";
+
 import { getActiveTab, getTabRoute } from "./sharedNavigation";
 
 /**
@@ -46,23 +46,16 @@ export function Navigator() {
         <Icon28ListOutline />
       </Tabbar.Item>
       <Tabbar.Item
-        text="Charts"
-        selected={activeTab === 2}
-        onClick={() => handleNavigate(getTabRoute(2), 2)}
-      >
-        <Icon28CupOutline />
-      </Tabbar.Item>
-      <Tabbar.Item
         text="Bands"
         selected={activeTab === 3}
-        onClick={() => handleNavigate(getTabRoute(3), 3)}
+        onClick={() => handleNavigate(getTabRoute(2), 2)}
       >
         <Icon28UsersOutline />
       </Tabbar.Item>
       <Tabbar.Item
-        text={wallet ? "Profile" : "Connect"}
+        text="Profile"
         selected={activeTab === 4}
-        onClick={() => handleNavigate(getTabRoute(4), 4)}
+        onClick={() => handleNavigate(getTabRoute(3), 3)}
       >
         <Icon28UserOutline />
       </Tabbar.Item>

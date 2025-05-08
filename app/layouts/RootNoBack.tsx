@@ -42,9 +42,5 @@ export default function RootNoBack() {
     }
   }, []);
 
-  return (
-    <div>
-      <Outlet />
-    </div>
-  );
+  return <Outlet />;
 }

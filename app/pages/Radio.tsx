@@ -3,6 +3,10 @@ import { RadioListenerCount } from "@/components/Radio/RadioListenerCount";
 import type { Track } from "@/services/RadioHeartService";
 import { Section, Placeholder, Button } from "@telegram-apps/telegram-ui";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
+import { bem } from "@/css/bem";
+import "./Radio.css";
+
+const [, e] = bem("radio-page");
 
 interface RadioProps {
   recentTracks?: Track[];
@@ -19,11 +23,12 @@ export function Radio({ recentTracks = [] }: RadioProps) {
   if (!playing) {
     return (
       <Placeholder
+        className={e("placeholder")}
         header="Start Listening"
         description={
           <>
             <p>Start listening to get crypto</p>
-            <Button size="l" onClick={handlePlay}>
+            <Button size="s" onClick={handlePlay}>
               Play Radio
             </Button>
           </>

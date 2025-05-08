@@ -3,8 +3,11 @@ import { Tabbar } from "@telegram-apps/telegram-ui";
 import { useTonWallet } from "@tonconnect/ui-react";
 import {
   Icon28ListOutline,
+  Icon28Music,
   Icon28MusicOutline,
+  Icon28User,
   Icon28UserOutline,
+  Icon28Users,
   Icon28UsersOutline,
 } from "@vkontakte/icons";
 
@@ -36,7 +39,7 @@ export function Navigator() {
         selected={activeTab === 0}
         onClick={() => handleNavigate(getTabRoute(0), 0)}
       >
-        <Icon28MusicOutline />
+        {activeTab === 0 ? <Icon28Music /> : <Icon28MusicOutline />}
       </Tabbar.Item>
       <Tabbar.Item
         text="Queue"
@@ -47,17 +50,17 @@ export function Navigator() {
       </Tabbar.Item>
       <Tabbar.Item
         text="Bands"
-        selected={activeTab === 3}
+        selected={activeTab === 2}
         onClick={() => handleNavigate(getTabRoute(2), 2)}
       >
-        <Icon28UsersOutline />
+        {activeTab === 2 ? <Icon28Users /> : <Icon28UsersOutline />}
       </Tabbar.Item>
       <Tabbar.Item
         text="Profile"
-        selected={activeTab === 4}
+        selected={activeTab === 3}
         onClick={() => handleNavigate(getTabRoute(3), 3)}
       >
-        <Icon28UserOutline />
+        {activeTab === 3 ? <Icon28User /> : <Icon28UserOutline />}
       </Tabbar.Item>
     </Tabbar>
   );

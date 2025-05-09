@@ -1,0 +1,140 @@
+.radio-controller-container {
+  position: fixed;
+  bottom: 80px; /* Positioned above the tab bar */
+  right: 16px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.radio-controller-card {
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.radio-controller-card.playing {
+  width: 180px;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+}
+
+.radio-controller-card > div {
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+/* Custom card styling to mimic Telegram UI Card component */
+.custom-card {
+  background-color: var(--tg-theme-bg-color, #ffffff);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.radio-controller-card.playing .custom-card {
+  flex-direction: row;
+}
+
+.radio-controller-artwork {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+.radio-controller-artwork img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.radio-controller-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.radio-controller-card:hover .radio-controller-overlay,
+.custom-card:hover .radio-controller-overlay {
+  opacity: 1;
+}
+
+.radio-controller-stop-button {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  color: white !important;
+  border: none !important;
+  backdrop-filter: blur(4px);
+}
+
+.radio-controller-info {
+  padding: 8px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.radio-controller-title {
+  font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--tg-theme-text-color, #000000);
+}
+
+.radio-controller-artist {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--tg-theme-hint-color, #999999);
+}
+
+.radio-controller-play {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--tg-theme-button-color, #2481cc);
+  color: var(--tg-theme-button-text-color, #ffffff);
+}
+
+.radio-controller-play-text {
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .radio-controller-card.playing {
+    width: 150px;
+  }
+
+  .radio-controller-artwork {
+    width: 64px;
+    height: 80px;
+  }
+}

@@ -13,7 +13,7 @@ import {
 
 import { useLocation, useNavigate } from "react-router";
 
-import { getActiveTab, getTabRoute } from "./sharedNavigation";
+import { getActiveTab, getTabRoute } from "./shared";
 
 /**
  * Main application navigation component that displays a persistent bottom tab bar

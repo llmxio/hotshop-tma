@@ -3,7 +3,13 @@ import { Section, List, Cell, Image } from "@telegram-apps/telegram-ui";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import { CURRENT_ARTIST } from "./RadioCurrentArtist";
 
-export let CURRENT_ALBUMS = [
+export interface Album {
+  name: string;
+  year: string;
+  cover: string;
+}
+
+export let CURRENT_ALBUMS: Album[] = [
   // Default placeholder
   {
     name: "Unknown Album",
@@ -30,6 +36,7 @@ async function fetchAlbums(artist: string) {
 export function RadioCurrentAlbum() {
   const { playing } = useRadioPlayer();
   const [albums, setAlbums] = useState(CURRENT_ALBUMS);
+  // Use name property which comes from our extended ArtistInfo interface
   const artist = CURRENT_ARTIST.name;
 
   useEffect(() => {

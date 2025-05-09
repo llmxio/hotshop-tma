@@ -1,10 +1,15 @@
-import type { RadioTrackInfoProps } from "@/components/Radio";
+import type { RadioSong } from "@/types/appTypes";
+import { DEFAULT_ARTWORK } from "@/types/appTypes";
 
-export type Track = RadioTrackInfoProps;
+export type Track = {
+  name: string;
+  index?: number;
+  time?: string;
+};
 
 export interface ApiResponse {
   tracks?: Track[];
-  listeners?: number | string; // Updated to accept both number and string
+  listeners?: number | string;
   [key: string]: any;
 }
 

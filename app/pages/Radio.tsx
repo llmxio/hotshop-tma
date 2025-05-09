@@ -1,9 +1,9 @@
 import { RadioCurrentAlbum, RadioCurrentArtist } from "@/components/Radio";
-import { RadioListenerCount } from "@/components/Radio/RadioListenerCount";
 import type { Track } from "@/services/RadioHeartService";
 import { Section, Placeholder, Button } from "@telegram-apps/telegram-ui";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import { bem } from "@/css/bem";
+import { DEFAULT_STATION } from "@/types/appTypes";
 import "./Radio.css";
 
 const [, e] = bem("radio-page");
@@ -17,7 +17,8 @@ export function Radio({ recentTracks = [] }: RadioProps) {
   const { playing, play } = useRadioPlayer();
 
   const handlePlay = () => {
-    play();
+    // Pass the required parameters to the play function
+    play(DEFAULT_STATION.src, DEFAULT_STATION.title, DEFAULT_STATION.artwork);
   };
 
   if (!playing) {
@@ -27,7 +28,7 @@ export function Radio({ recentTracks = [] }: RadioProps) {
         header="Start Listening"
         description={
           <>
-            <p>Start listening to get crypto</p>
+            <p>and earn coins</p>
             <Button size="s" onClick={handlePlay}>
               Play Radio
             </Button>
@@ -42,9 +43,7 @@ export function Radio({ recentTracks = [] }: RadioProps) {
     <>
       <RadioCurrentArtist />
       <RadioCurrentAlbum />
-      {/* <Section header="Station Info">
-        <RadioListenerCount />
-      </Section> */}
+      {/* Removed unused RadioListenerCount section */}
     </>
   );
 }

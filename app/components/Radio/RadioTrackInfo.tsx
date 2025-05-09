@@ -7,10 +7,7 @@ import {
   getSongFromTitle,
   radioHeartService,
 } from "@/services/RadioHeartService";
-
-// Constants
-const DEFAULT_IMAGE =
-  "https://billing.radioheart.ru/public_pages/assets/img/noimage.jpg";
+import { DEFAULT_ARTWORK } from "@/types/appTypes";
 
 // Helper function to format time as HH:MM
 const formatTime = (timeString?: string) => {
@@ -33,7 +30,7 @@ export const RadioTrackInfo: React.FC<RadioTrackInfoProps> = ({
   name,
   index = 0,
   time,
-  defaultImage = DEFAULT_IMAGE,
+  defaultImage = DEFAULT_ARTWORK,
   dense = false,
 }) => {
   const artist = getArtistFromTitle(name);

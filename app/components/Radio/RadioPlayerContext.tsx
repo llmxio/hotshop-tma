@@ -6,22 +6,15 @@ import {
   getSongFromTitle,
   radioHeartService,
 } from "@/services/RadioHeartService";
+import type { RadioStation, RadioSong } from "@/types/appTypes";
+import { DEFAULT_ARTWORK } from "@/types/appTypes";
 
 export interface RadioPlayerProps {
   playing: boolean;
-  currentStation: {
-    src: string;
-    title: string;
-    artwork?: string;
-  };
+  currentStation: RadioStation;
   volume: number;
   muted: boolean;
-  currentSong: {
-    artist: string;
-    title: string;
-    fullTitle: string;
-    artwork?: string;
-  };
+  currentSong: RadioSong;
   play: (src?: string, title?: string, artwork?: string) => void;
   stop: () => void;
   setVolume: (value: number) => void;
@@ -48,10 +41,6 @@ const defaultContext: RadioPlayerProps = {
   toggleMute: () => {},
 };
 
-// Default fallback image when track artwork can't be loaded
-const DEFAULT_ARTWORK =
-  "https://billing.radioheart.ru/public_pages/assets/img/noimage.jpg";
-
 export const RadioPlayerContext = createContext(defaultContext);
 
 export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -59,14 +48,14 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
-  const [currentStation, setCurrentStation] = useState({
+  const [currentStation, setCurrentStation] = useState<RadioStation>({
     src: "",
     title: "",
     artwork: "",
   });
   const [volume, setVolumeState] = useState(1);
   const [muted, setMuted] = useState(false);
-  const [currentSong, setCurrentSong] = useState({
+  const [currentSong, setCurrentSong] = useState<RadioSong>({
     artist: "",
     title: "",
     fullTitle: "",

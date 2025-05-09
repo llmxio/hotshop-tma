@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Section, Cell, Avatar } from "@telegram-apps/telegram-ui";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
+import type { RadioSong } from "@/types/appTypes";
 
-export let CURRENT_ARTIST = {
+// Artist information shared between components
+// Extended with additional fields not in the base RadioSong type
+export interface ArtistInfo extends RadioSong {
+  name: string; // this is redundant with 'artist' but kept for backward compatibility
+  song: string; // this is redundant with 'title' but kept for backward compatibility
+  album: string;
+  year: string;
+  bio: string;
+}
+
+export let CURRENT_ARTIST: ArtistInfo = {
   name: "",
   song: "",
+  artist: "",
+  title: "",
+  fullTitle: "",
   album: "",
   year: "",
   artwork: "",
@@ -44,6 +58,9 @@ export function RadioCurrentArtist() {
   CURRENT_ARTIST = {
     name: artist,
     song: title,
+    artist: artist,
+    title: title,
+    fullTitle: `${artist} - ${title}`,
     album: artistInfo.album,
     year: artistInfo.year,
     artwork: currentSong.artwork || artistInfo.artwork,

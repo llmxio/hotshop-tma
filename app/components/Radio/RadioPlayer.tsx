@@ -4,15 +4,7 @@ import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import { Link } from "@/components/Link";
 import { Icon24Play, Icon24Stop, Icon24Music } from "@vkontakte/icons";
 import { publicUrl } from "@/utils/public-url";
-
-// Default station information for fallback
-const defaultStation = {
-  id: "balrockru",
-  name: "Hot Shop",
-  genre: "non-format music",
-  src: "https://listen.myrh.ru/balrockru",
-  artwork: "/logobot.png",
-};
+import { DEFAULT_STATION } from "@/types/appTypes";
 
 interface RadioPlayerProps {
   mini?: boolean;
@@ -25,9 +17,9 @@ interface RadioPlayerProps {
 export const RadioPlayer: React.FC<RadioPlayerProps> = ({ mini = false }) => {
   const { play, playing, currentStation, stop, currentSong } = useRadioPlayer();
 
-  const stationName = currentStation.title || defaultStation.name;
-  const stationSrc = currentStation.src || defaultStation.src;
-  const stationArtwork = currentStation.artwork || defaultStation.artwork;
+  const stationName = currentStation.title || DEFAULT_STATION.title;
+  const stationSrc = currentStation.src || DEFAULT_STATION.src;
+  const stationArtwork = currentStation.artwork || DEFAULT_STATION.artwork;
 
   const isStationPlaying = playing && currentStation.src === stationSrc;
 
@@ -73,7 +65,7 @@ export const RadioPlayer: React.FC<RadioPlayerProps> = ({ mini = false }) => {
       subtitle={
         isStationPlaying && currentSong.artist
           ? currentSong.artist
-          : defaultStation.genre
+          : DEFAULT_STATION.genre
       }
       before={
         <Avatar

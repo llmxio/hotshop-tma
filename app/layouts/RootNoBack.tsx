@@ -7,7 +7,7 @@ import {
   getNextTab,
   getPrevTab,
   getTabRoute,
-} from "@/components/Navigator/sharedNavigation";
+} from "@/components/Navigator/shared";
 import { useLocation } from "react-router";
 
 export default function RootNoBack() {

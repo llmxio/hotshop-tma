@@ -1,4 +1,4 @@
-.bands-page__container {
+.jam-page__container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,7 +6,7 @@
   padding: 20px;
 }
 
-.bands-page__placeholder {
+.jam-page__placeholder {
   text-align: center;
   max-width: 400px;
   width: 100%;

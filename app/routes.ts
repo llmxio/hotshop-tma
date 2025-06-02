@@ -9,7 +9,7 @@ export default [
   layout("layouts/RootNoBack.tsx", [
     index("routes/radio.tsx"),
     route("profile", "routes/profile.tsx"),
-    route("playlist", "routes/playlist.tsx"),
+    route("jam", "routes/jam.tsx"),
     route("bands", "routes/bands.tsx"),
     route("track/:trackArtist/:trackTitle", "routes/track.tsx"),
     // Catch-all route for 404

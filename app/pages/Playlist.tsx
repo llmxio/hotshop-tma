@@ -1,9 +1,18 @@
-import { RadioPlaylist } from "@/components/Radio";
+import { Placeholder } from "@telegram-apps/telegram-ui";
+import { bem } from "@/css/bem";
 
-interface PlaylistProps {
-  recentTracks?: any[];
-}
+const [, e] = bem("playlist-page");
 
-export function Playlist({ recentTracks }: PlaylistProps) {
-  return <RadioPlaylist initialTracks={recentTracks} />;
+export function Playlist() {
+  return (
+    <Placeholder
+      className={e("placeholder")}
+      header="Playlist"
+      description={
+        <>
+          <p>Coming soon</p>
+        </>
+      }
+    />
+  );
 }

@@ -1,11 +1,14 @@
-import type { Route } from "./+types/playlist";
-import { Playlist } from "@/pages/Playlist";
+import type { Route } from "./+types/jam";
+import { Jam } from "@/pages/Jam";
 import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Playlist - Hot Shop Radio" },
-    { name: "description", content: "Coming soon - Hot Shop Radio" },
+    { title: "Jam - Hot Shop Radio" },
+    {
+      name: "description",
+      content: "Jamulus - Real-time music collaboration - Hot Shop Radio",
+    },
   ];
 }
 
@@ -30,6 +33,6 @@ export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
   }
 }
 
-export default function PlaylistRoute({ loaderData }: Route.ComponentProps) {
-  return <Playlist />;
+export default function JamRoute({ loaderData }: Route.ComponentProps) {
+  return <Jam />;
 }

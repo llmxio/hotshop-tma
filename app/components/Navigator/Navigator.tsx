@@ -1,4 +1,4 @@
-import { Tabbar } from "@telegram-apps/telegram-ui";
+import { Tabbar, Navigation } from "@telegram-apps/telegram-ui";
 
 import { useTonWallet } from "@tonconnect/ui-react";
 import {
@@ -11,10 +11,12 @@ import {
   Icon28UsersOutline,
 } from "@vkontakte/icons";
 
-import { useLocation, useNavigate } from "react-router";
+import { useLocation } from "react-router";
+import { Link } from "@/components/Link";
 
 import { getActiveTab, getTabRoute } from "./shared";
 import { RadioController } from "@/components/Radio";
+import "./Navigator.css";
 
 /**
  * Main application navigation component that displays a persistent bottom tab bar
@@ -22,49 +24,42 @@ import { RadioController } from "@/components/Radio";
  */
 export function Navigator() {
   const location = useLocation();
-  const navigate = useNavigate();
   const wallet = useTonWallet();
 
   const activeTab = getActiveTab(location.pathname);
 
-  const handleNavigate = (route: string, index: number) => {
-    if (activeTab !== index) {
-      navigate(route);
-    }
-  };
-
   return (
     <>
       <RadioController />
-      <Tabbar>
-        <Tabbar.Item
-          text="Radio"
-          selected={activeTab === 0}
-          onClick={() => handleNavigate(getTabRoute(0), 0)}
-        >
-          {activeTab === 0 ? <Icon28Music /> : <Icon28MusicOutline />}
-        </Tabbar.Item>
-        <Tabbar.Item
-          text="Queue"
-          selected={activeTab === 1}
-          onClick={() => handleNavigate(getTabRoute(1), 1)}
-        >
-          <Icon28ListOutline />
-        </Tabbar.Item>
-        <Tabbar.Item
-          text="Bands"
-          selected={activeTab === 2}
-          onClick={() => handleNavigate(getTabRoute(2), 2)}
-        >
-          {activeTab === 2 ? <Icon28Users /> : <Icon28UsersOutline />}
-        </Tabbar.Item>
-        <Tabbar.Item
-          text="Profile"
-          selected={activeTab === 3}
-          onClick={() => handleNavigate(getTabRoute(3), 3)}
-        >
-          {activeTab === 3 ? <Icon28User /> : <Icon28UserOutline />}
-        </Tabbar.Item>
+      <Tabbar className="navigator-tabbar">
+        <Link to={getTabRoute(0)} viewTransition>
+          <Tabbar.Item text="Radio" selected={activeTab === 0}>
+            <Navigation>
+              {activeTab === 0 ? <Icon28Music /> : <Icon28MusicOutline />}
+            </Navigation>
+          </Tabbar.Item>
+        </Link>
+        <Link to={getTabRoute(1)} viewTransition>
+          <Tabbar.Item text="Jam" selected={activeTab === 1}>
+            <Navigation>
+              <Icon28ListOutline />
+            </Navigation>
+          </Tabbar.Item>
+        </Link>
+        <Link to={getTabRoute(2)} viewTransition>
+          <Tabbar.Item text="Bands" selected={activeTab === 2}>
+            <Navigation>
+              {activeTab === 2 ? <Icon28Users /> : <Icon28UsersOutline />}
+            </Navigation>
+          </Tabbar.Item>
+        </Link>
+        <Link to={getTabRoute(3)} viewTransition>
+          <Tabbar.Item text="Profile" selected={activeTab === 3}>
+            <Navigation>
+              {activeTab === 3 ? <Icon28User /> : <Icon28UserOutline />}
+            </Navigation>
+          </Tabbar.Item>
+        </Link>
       </Tabbar>
     </>
   );

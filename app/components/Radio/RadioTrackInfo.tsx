@@ -77,7 +77,11 @@ export const RadioTrackInfo: React.FC<RadioTrackInfoProps> = ({
     </Cell>
   );
 
-  return <Link to={trackUrl}>{cellContent}</Link>;
+  return (
+    <Link to={trackUrl} viewTransition>
+      {cellContent}
+    </Link>
+  );
 };
 
 export default RadioTrackInfo;

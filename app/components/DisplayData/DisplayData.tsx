@@ -30,7 +30,7 @@ export const DisplayData: FC<DisplayDataProps> = ({ header, rows }) => (
         valueNode = <i>empty</i>;
       } else {
         if ("type" in item) {
-          valueNode = <Link to={item.value}>Open</Link>;
+          valueNode = <Link to={item.value} viewTransition>Open</Link>;
         } else if (typeof item.value === "string") {
           valueNode = isRGB(item.value) ? (
             <RGB color={item.value} />

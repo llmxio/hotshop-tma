@@ -95,7 +95,7 @@ export const RadioPlayer: React.FC<RadioPlayerProps> = ({ mini = false }) => {
     >
       {isStationPlaying && currentSong.title && trackUrl ? (
         <>
-          <Link to={trackUrl}>{currentSong.title}</Link>
+          <Link to={trackUrl} viewTransition>{currentSong.title}</Link>
         </>
       ) : (
         stationName

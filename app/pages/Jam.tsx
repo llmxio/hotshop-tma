@@ -1,18 +1,18 @@
 import { Placeholder } from "@telegram-apps/telegram-ui";
 import { bem } from "@/css/bem";
-import "./Bands.css";
+import "./Jam.css";
 
-const [, e] = bem("bands-page");
+const [, e] = bem("jam-page");
 
-export function Bands() {
+export function Jam() {
   return (
     <div className={e("container")}>
       <Placeholder
         className={e("placeholder")}
-        header="Bands"
+        header="Jamulus"
         description={
           <>
-            <p>Russian Underground Not Dead</p>
+            <p>Real-time music collaboration platform</p>
           </>
         }
       />

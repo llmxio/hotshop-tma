@@ -10,6 +10,7 @@ export const Link: FC<LinkProps> = ({
   className,
   onClick: propsOnClick,
   to,
+  viewTransition, // Extract viewTransition prop
   ...rest
 }) => {
   const onClick = useCallback<MouseEventHandler<HTMLAnchorElement>>(
@@ -45,6 +46,7 @@ export const Link: FC<LinkProps> = ({
       {...rest}
       to={to}
       onClick={onClick}
+      viewTransition={viewTransition} // Pass viewTransition to RouterLink
       className={classNames(className, "link")}
     />
   );

@@ -1,13 +1,12 @@
-.bands-page__container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
+.bands-page__placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
-.bands-page__placeholder {
-  text-align: center;
-  max-width: 400px;
-  width: 100%;
+.bands-page__button {
+  margin: 16px auto 0;
 }

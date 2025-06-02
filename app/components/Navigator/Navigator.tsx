@@ -9,6 +9,10 @@ import {
   Icon28UserOutline,
   Icon28Users,
   Icon28UsersOutline,
+  Icon28Video,
+  Icon28VideoOutline,
+  Icon28Flash,
+  Icon28FlashOutline,
 } from "@vkontakte/icons";
 
 import { useLocation } from "react-router";
@@ -40,16 +44,16 @@ export function Navigator() {
           </Tabbar.Item>
         </Link>
         <Link to={getTabRoute(1)} viewTransition>
-          <Tabbar.Item text="Jam" selected={activeTab === 1}>
+          <Tabbar.Item text="Bands" selected={activeTab === 1}>
             <Navigation>
-              <Icon28ListOutline />
+              {activeTab === 1 ? <Icon28Users /> : <Icon28UsersOutline />}
             </Navigation>
           </Tabbar.Item>
         </Link>
         <Link to={getTabRoute(2)} viewTransition>
-          <Tabbar.Item text="Bands" selected={activeTab === 2}>
+          <Tabbar.Item text="Jam" selected={activeTab === 2}>
             <Navigation>
-              {activeTab === 2 ? <Icon28Users /> : <Icon28UsersOutline />}
+              {activeTab === 2 ? <Icon28Flash /> : <Icon28FlashOutline />}
             </Navigation>
           </Tabbar.Item>
         </Link>

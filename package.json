@@ -2,6 +2,7 @@
   "name": "hotstop-tma",
   "private": true,
   "type": "module",
+  "version": "0.0.1",
   "scripts": {
     "build": "react-router build",
     "deploy": "npm run build && wrangler deploy",

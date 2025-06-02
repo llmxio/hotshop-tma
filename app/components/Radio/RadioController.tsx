@@ -34,16 +34,12 @@ export const RadioController: React.FC = () => {
   };
 
   return (
-    <div className="radio-controller-container">
-      <div
-        className={`radio-controller-card ${isStationPlaying ? "playing" : ""}`}
-        onClick={!isStationPlaying ? handlePlay : undefined}
-      >
-        {/* Using a styled div instead of Card component to avoid styling issues */}
-        <div className="custom-card">
-          {/* Card content with artwork when playing */}
-          {isStationPlaying ? (
-            <>
+    <>
+      {isStationPlaying && (
+        <div className="radio-controller-container">
+          <div className="radio-controller-card playing">
+            {/* Using a styled div instead of Card component to avoid styling issues */}
+            <div className="custom-card">
               <div className="radio-controller-artwork">
                 <Image
                   src={displayArtwork}
@@ -70,16 +66,10 @@ export const RadioController: React.FC = () => {
                   </div>
                 )}
               </div>
-            </>
-          ) : (
-            // Play button when not playing
-            <div className="radio-controller-play">
-              <Icon24Play width={24} height={24} />
-              <div className="radio-controller-play-text">Play Radio</div>
             </div>
-          )}
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };

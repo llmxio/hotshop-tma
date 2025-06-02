@@ -1,7 +1,8 @@
 {
-  "name": "llmx-app",
+  "name": "hotstop-tma",
   "private": true,
   "type": "module",
+  "version": "0.0.1",
   "scripts": {
     "build": "react-router build",
     "deploy": "npm run build && wrangler deploy",
@@ -14,7 +15,9 @@
     "@telegram-apps/sdk-react": "^3.2.1",
     "@telegram-apps/telegram-ui": "^2.1.8",
     "@tonconnect/ui-react": "^2.1.0",
+    "@vkontakte/icons": "^3.6.0",
     "isbot": "^5.1.17",
+    "musicbrainz-api": "^0.25.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^7.5.2"
@@ -26,11 +29,11 @@
     "@types/node": "^20",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
-    "react-icons": "^5.5.0",
+    "react-swipeable": "^7.0.2",
     "tailwindcss": "^4.1.4",
     "typescript": "^5.8.3",
-    "vite": "^6.3.3",
+    "vite": "^6.3.4",
     "vite-tsconfig-paths": "^5.1.4",
-    "wrangler": "^4.13.2"
+    "wrangler": "^4.14.1"
   }
 }

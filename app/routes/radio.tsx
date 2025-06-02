@@ -1,36 +1,52 @@
 import type { Route } from "./+types/radio";
-import { RadioPage } from "~/pages/RadioPage";
+import { Radio } from "@/pages/Radio";
 import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
+import { radioHeartService } from "@/services/RadioHeartService";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Hot Shop Radio" },
+    { name: "description", content: "Welcome to Hot Shop Radio!" },
   ];
 }
 
-export function loader({ context }: Route.LoaderArgs) {
-  return {
-    message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE,
-  };
+export async function loader({ context }: Route.LoaderArgs) {
+  try {
+    // Fetch recent tracks on the server side
+    const recentTracks = await radioHeartService.getRecentTracks(10);
+
+    return {
+      message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE,
+      recentTracks: [...recentTracks],
+    };
+  } catch (error) {
+    console.error("Server-side error fetching tracks:", error);
+    return {
+      message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE,
+      recentTracks: [],
+    };
+  }
 }
 
-export const clientLoader = async ({
-  request,
-  serverLoader,
-  params,
-}: Route.ClientLoaderArgs) => {
+export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
   try {
     const serverParams = await serverLoader();
     const launchParams = retrieveLaunchParams();
 
-    return { ...launchParams, ...serverParams };
+    return {
+      ...launchParams,
+      ...serverParams,
+    };
   } catch (error) {
-    console.error("radio", error);
+    console.error("Client loader error:", error);
+    return {
+      recentTracks: [],
+    };
   }
-};
+}
 
-export default function Radio({ loaderData }: Route.ComponentProps) {
-  // console.log("radio", loaderData);
-  return <RadioPage />;
+export default function RadioRoute({ loaderData }: Route.ComponentProps) {
+  console.log("RadioRoute", loaderData);
+
+  return <Radio recentTracks={loaderData?.recentTracks} />;
 }

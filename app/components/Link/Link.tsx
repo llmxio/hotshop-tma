@@ -2,7 +2,7 @@ import { openLink } from "@telegram-apps/sdk-react";
 import { type FC, type MouseEventHandler, useCallback } from "react";
 import { Link as RouterLink, type LinkProps } from "react-router";
 
-import { classNames } from "~/css/classnames";
+import { classNames } from "@/css/classnames";
 
 import "./Link.css";
 
@@ -10,6 +10,7 @@ export const Link: FC<LinkProps> = ({
   className,
   onClick: propsOnClick,
   to,
+  viewTransition, // Extract viewTransition prop
   ...rest
 }) => {
   const onClick = useCallback<MouseEventHandler<HTMLAnchorElement>>(
@@ -45,8 +46,10 @@ export const Link: FC<LinkProps> = ({
       {...rest}
       to={to}
       onClick={onClick}
+      viewTransition={viewTransition} // Pass viewTransition to RouterLink
       className={classNames(className, "link")}
-      data-oid="yqsxvps"
     />
   );
 };
+
+export default Link;

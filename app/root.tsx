@@ -19,12 +19,13 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import { NotFound } from "@/pages/NotFound";
 import type { Route } from "./+types/root";
 import "./app.css";
+import { Navigator } from "./components/Navigator";
+import { RadioPlayer, RadioPlayerProvider } from "./components/Radio";
 import { main } from "./main";
 import { mockEnv } from "./mock";
-import { RadioPlayerProvider } from "./components/RadioPlayerContext";
-import { GlobalRadioFooter } from "./components/GlobalRadioFooter";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -57,8 +58,11 @@ export async function clientLoader({
   try {
     await mockEnv();
 
+    // TODO: Replace with proper method to get launch params outside of React components
+    // Hooks can't be used here - this will need to be refactored
     const launchParams = retrieveLaunchParams();
     const { tgWebAppPlatform: platform } = launchParams;
+
     const debug =
       (launchParams.tgWebAppStartParam || "").includes("platformer_debug") ||
       import.meta.env.DEV;
@@ -79,7 +83,6 @@ export async function clientLoader({
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const isDark = useSignal(isMiniAppDark);
-
   return (
     <html lang="en">
       <head>
@@ -89,12 +92,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <RadioPlayerProvider>
-          <AppRoot appearance={isDark ? "dark" : "light"} platform="base">
-            {children}
-            <GlobalRadioFooter />
-          </AppRoot>
-        </RadioPlayerProvider>
+        <TonConnectUIProvider {...tonConnectOptions}>
+          <RadioPlayerProvider>
+            <AppRoot appearance={isDark ? "dark" : "light"} platform="base">
+              <RadioPlayer mini />
+              {children}
+              <Navigator />
+            </AppRoot>
+          </RadioPlayerProvider>
+        </TonConnectUIProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -111,30 +117,22 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
-  let stack: string | undefined;
-
-  if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
-      error.status === 404
-        ? "The requested page could not be found."
-        : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
+  // Use isRouteErrorResponse to check for 404/NotFound
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return <NotFound />;
   }
-
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <div>
+      <p>An unhandled error occurred:</p>
+      <blockquote>
+        <code>
+          {error instanceof Error
+            ? error.message
+            : typeof error === "string"
+            ? error
+            : JSON.stringify(error)}
+        </code>
+      </blockquote>
+    </div>
   );
 }

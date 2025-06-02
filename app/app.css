@@ -3,3 +3,15 @@ body {
   padding: 0;
   margin: 0;
 }
+
+/* Global Radio Player styles */
+.radio-player {
+  /* border-bottom: 1px solid var(--tg-theme-secondary-bg-color, #f0f0f0); */
+  /* background-color: var(--tg-theme-bg-color, white); */
+  position: relative;
+  z-index: 10;
+}
+
+.radio-player.mini {
+  padding: 8px 16px;
+}

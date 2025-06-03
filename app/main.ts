@@ -10,6 +10,8 @@ import {
   isViewportMounted,
   mockTelegramEnv,
   mountBackButton,
+  mountClosingBehavior,
+  isClosingBehaviorMounted,
   mountMiniAppSync,
   mountThemeParamsSync,
   enableClosingConfirmation,
@@ -86,6 +88,11 @@ export async function main(options: {
   mountViewport.ifAvailable();
   if (isViewportMounted() && !isViewportCssVarsBound()) {
     bindViewportCssVars();
+  }
+
+  if (mountClosingBehavior.isAvailable()) {
+    mountClosingBehavior();
+    isClosingBehaviorMounted(); // true
   }
 
   if (enableClosingConfirmation.isAvailable()) {

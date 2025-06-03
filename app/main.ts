@@ -5,12 +5,14 @@ import {
   init,
   isThemeParamsCssVarsBound,
   isThemeParamsMounted,
+  isClosingConfirmationEnabled,
   isViewportCssVarsBound,
   isViewportMounted,
   mockTelegramEnv,
   mountBackButton,
   mountMiniAppSync,
   mountThemeParamsSync,
+  enableClosingConfirmation,
   mountViewport,
   restoreInitData,
   retrieveLaunchParams,
@@ -84,6 +86,11 @@ export async function main(options: {
   mountViewport.ifAvailable();
   if (isViewportMounted() && !isViewportCssVarsBound()) {
     bindViewportCssVars();
+  }
+
+  if (enableClosingConfirmation.isAvailable()) {
+    enableClosingConfirmation();
+    isClosingConfirmationEnabled(); // true
   }
 
   // if (isMiniAppMounted() && miniAppReady.isAvailable()) {

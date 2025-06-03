@@ -24,7 +24,7 @@ jobs:
         node-version: 20
 
     - name: Install modules
-      run: yarn install
+      run: npm install
 
-    - name: Run lint
-      run: yarn lint
+    - name: Run Wragnler Typer
+      run: npx wrangler types

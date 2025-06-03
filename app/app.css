@@ -2,14 +2,19 @@ body {
   background: var(--tg-theme-secondary-bg-color, white);
   padding: 0;
   margin: 0;
+  /* Add top padding to account for fixed radio player */
+  padding-top: 72px;
 }
 
 /* Global Radio Player styles */
 .radio-player {
-  /* border-bottom: 1px solid var(--tg-theme-secondary-bg-color, #f0f0f0); */
-  /* background-color: var(--tg-theme-bg-color, white); */
-  position: relative;
-  z-index: 10;
+  background-color: var(--tg-theme-bg-color, white);
+  border-bottom: 1px solid var(--tg-theme-separator-color, rgba(0, 0, 0, 0.1));
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 150;
 }
 
 .radio-player.mini {
